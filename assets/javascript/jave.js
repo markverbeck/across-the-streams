@@ -35,5 +35,6 @@ $(document).ready(function(){
 		$(".deleteButton").attr("data-title", deleteLabel).addClass("hidden");
 
 	})
+	
 });
 

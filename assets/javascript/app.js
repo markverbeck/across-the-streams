@@ -85,7 +85,7 @@ $(document).ready(function(){
 		deleteButton.html("X");
 		deleteButton.attr("data-title", listname);
 		var div = $("<div>");
-		div.addClass("text-left buttonDiv");
+		div.addClass("pull-left buttonDiv");
 		div.attr("data-title", listname);
 		div.append(deleteButton);
 		div.append(button);

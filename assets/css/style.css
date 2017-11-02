@@ -4,5 +4,10 @@ html, body {
 }
 
 body {
-	background: url("assets/images/backgound.png");
+	background: url("../images/background.png");
+	color: white;
+}
+
+.navbar {
+	background-color: #004053;
 }

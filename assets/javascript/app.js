@@ -69,13 +69,15 @@ window.addEventListener('load', function() {
 
 
 
-
+// submit/delete buttons  MV
 $(document).ready(function(){
 
 
 	$("#submit").on("click", function(){
 		event.preventDefault();
+    var buttonName = [];
 		listname = $("#listItem").val().trim();
+    buttonName.push(listname);
 		var button = $("<button>").addClass("btn-lg btn-default listSearch");
 		button.attr("data-title", listname);
 		button.html(listname);
@@ -94,9 +96,7 @@ $(document).ready(function(){
 
 
 	$(document).on("click",".deleteButton", function(){
-		var deleteLabel = $(".buttonDiv").attr("data-title");
-		$(".listSearch").attr("data-title", deleteLabel).addClass("hidden");
-		$(".deleteButton").attr("data-title", deleteLabel).addClass("hidden");
+		$(this).parent().remove();
 
 	})
 	

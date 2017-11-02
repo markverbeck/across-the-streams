@@ -27,6 +27,8 @@ ui.start('#firebaseui-auth-container', uiConfig);
 
 var listname;
 
+var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
+
 initApp = function() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

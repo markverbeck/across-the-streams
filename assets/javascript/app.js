@@ -1,4 +1,12 @@
-
+var config = {
+  apiKey: "AIzaSyAUfx2zzGieGetCyObO9plSOpAY1pEUpvo",
+  authDomain: "across-the-streams.firebaseapp.com",
+  databaseURL: "https://across-the-streams.firebaseio.com",
+  projectId: "across-the-streams",
+  storageBucket: "across-the-streams.appspot.com",
+  messagingSenderId: "249811555949"
+};
+firebase.initializeApp(config);
 
 
 var listname;

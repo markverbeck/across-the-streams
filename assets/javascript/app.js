@@ -102,3 +102,65 @@ $(document).ready(function(){
 	
 });
 
+function displayShowPoster() {
+
+        var show = $(this).attr("data-name");
+        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+
+        // Creates AJAX call for the specific movie button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+
+          // Creates a div to hold the movie
+          $(".show-poster").empty();
+          // Retrieves the Rating Data
+          console.log(response);
+          $("#show-poster").html(response.Poster);
+ });
+
+      }
+
+function displayShowInfo() {
+
+        var show = $(this).attr("data-name");
+        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+
+        // Creates AJAX call for the specific movie button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+
+          // Creates a div to hold the movie
+          $(".show-info").empty();
+          // Retrieves the Rating Data
+          console.log(response);
+          $("#show-info").html("<p>Title: " + response.Title + "</p>");
+          $("#show-info").html("<p>Year: " + response.Year + "</p>");
+          $("#show-info").html("<p>Genre: " + response.Genre + "</p");
+          $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
+ });
+
+      }
+
+function displayShowPlot() {
+
+        var show = $(this).attr("data-name");
+        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+
+        // Creates AJAX call for the specific movie button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+
+          // Creates a div to hold the movie
+          $(".show-plot").empty();
+          // Retrieves the Rating Data
+          console.log(response);
+          $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
+ });
+
+      }

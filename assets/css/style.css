@@ -6,8 +6,15 @@ html, body {
 body {
 	background: url("../images/background.png");
 	color: white;
+	font-family: 'Martel Sans', sans-serif;
 }
 
 .navbar {
 	background-color: #004053;
+	margin-bottom: 0px;
 }
+
+#logo {
+	margin-top: 5px;
+}
+

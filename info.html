@@ -7,6 +7,7 @@
 	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://use.fontawesome.com/b7e3bcf6e1.js"></script>
 	<script src="assets/javascript/app.js"></script>
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.css" />
 	<link href="https://fonts.googleapis.com/css?family=Martel+Sans" rel="stylesheet">
@@ -27,8 +28,25 @@
 	      <li><a href="#">link?</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	    	<div id="loading">Loading...</div>
+			  <div id="loaded" class="hidden">
+			    <div id="main">
+			      <div id="user-signed-in" class="hidden">
+			        <div id="user-info">
+			          <div id="name"></div>
+			          <div id="email"></div>
+			          <div class="clearfix"></div>
+			        </div>
+			        <p>
+			          <button id="sign-out"><i class='fa fa-sign-out' aria-hidden='true'></i> Sign Out</button>
+			        </p>
+			      </div>
+			      <div id="user-signed-out" class="hidden">
+			        <span>You are signed out.</span>
+			      </div>
+			    </div>
+			  </div>
+			  <div id="firebaseui-container"></div>
 	    </ul>
 	  </div>
 	</nav>

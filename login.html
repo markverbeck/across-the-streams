@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Across The Networks</title>
+	<title>Login</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.js"></script>
@@ -14,12 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-
 	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="assets/javascript/app.js"></script>
-
-	<!-- Nav Bar -->
+<!-- navbart -->
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
@@ -36,8 +34,7 @@
 	    </ul>
 	  </div>
 	</nav>
-
-    <!-- logo -->
+<!-- logo -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-11 text-center animated bounceInDown" id="logo">
@@ -46,41 +43,18 @@
 		</div>
 	</div>
 
-
-	<!-- button container -->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 text-center">
-				<h2>Add Show to Library!</h2>
-				<form class="form-inline">
-				  <div class="form-group">
-				    <input type="text" class="form-control" id="listItem">
-				  
-					<button id="submit" type="submit" class="btn btn-default">Submit</button>
-					</div>
-				</form>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 text-center">
-			<h1>Recommended Streaming Services</h1>
-			<p>Insert services here!!</p>
-				
+			<div class="col-md-4"></div>
+			<div class="col-md-4 text-center divBox">
+			<h2 class="logHead">Login</h2>
+			<div id="firebaseui-container"></div>
+			
 			</div>
 		</div>
 	</div>
 
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<h1>Shows in Library</h1>
-				<div id="list"></div>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>

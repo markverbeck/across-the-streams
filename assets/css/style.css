@@ -18,3 +18,31 @@ body {
 	margin-top: 5px;
 }
 
+.logHead{
+	text-decoration: underline;
+	margin-bottom: 4%;
+
+}
+
+#userLogin{
+	margin-bottom: 1%;
+}
+
+#userSignUp{
+	margin-bottom: 2%;
+}
+
+.logButton{
+	margin-top: 2%;
+	margin-bottom: 3%;
+}
+
+.divBox{
+	border: dashed 3px white;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.firstEntry{
+	margin-right: 1%;
+}

@@ -8,71 +8,13 @@ var config = {
 };
 firebase.initializeApp(config);
 
-var uiConfig = {
-  signInSuccessUrl: 'index.html',
-  signInOptions: [
-    // Leave the lines as is for the providers you want to offer your users.
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.GithubAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  // Terms of service url.
-  tosUrl: '<your-tos-url>'
-};
-
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// The start method will wait until the DOM is loaded.
-ui.start('#firebaseui-auth-container', uiConfig);
-
 var listname;
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
-initApp = function() {
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      // User is signed in.
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var uid = user.uid;
-      var providerData = user.providerData;
-      user.getIdToken().then(function(accessToken) {
-        document.getElementById('sign-in-status').textContent = 'Signed in';
-        document.getElementById('sign-in').textContent = 'Sign out';
-        document.getElementById('account-details').textContent = JSON.stringify({
-          displayName: displayName,
-          email: email,
-          emailVerified: emailVerified,
-          photoURL: photoURL,
-          uid: uid,
-          accessToken: accessToken,
-          providerData: providerData
-        }, null, '  ');
-      });
-    } else {
-      // User is signed out.
-      document.getElementById('sign-in-status').textContent = 'Signed out';
-      document.getElementById('sign-in').textContent = 'Sign in';
-      document.getElementById('account-details').textContent = 'null';
-    }
-  }, function(error) {
-    console.log(error);
-  });
-};
-
-window.addEventListener('load', function() {
-  initApp()
-});
-
-
-
 // submit/delete buttons  MV
 $(document).ready(function(){
-
-
+  //
 	$("#submit").on("click", function(){
 		event.preventDefault();
     var buttonName = [];
@@ -91,76 +33,152 @@ $(document).ready(function(){
 		div.append(button);
 		$("#list").append(div);
 		$("#listItem").val("");
-		
 	});
 
-
+  //
 	$(document).on("click",".deleteButton", function(){
 		$(this).parent().remove();
+	});	
 
-	})
-	
+  // The FirebaseUI config.
+  function getUiConfig() {
+    return {
+      'signInSuccessUrl': 'index.html',
+      'signInFlow': 'redirect',
+      'signInOptions': [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID
+      ],
+      // Terms of service url.
+      'tosUrl': 'https://www.google.com'
+    };
+  }
+
+  // Initialize the FirebaseUI Widget using Firebase.
+  var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+  // The URL of the FirebaseUI standalone widget.
+  function getWidgetUrl() {
+    return '/widget#recaptcha=' + getRecaptchaMode();
+  }
+
+  // Redirects to the FirebaseUI widget.
+  var signInWithRedirect = function() {
+    window.location.assign(getWidgetUrl());
+  };
+
+  // Displays the UI for a signed in user.
+  var handleSignedInUser = function(user) {
+    $("#user-signed-in").removeClass();
+    $("#user-signed-in").addClass("show");
+    $("#user-signed-out").removeClass();
+    $("#user-signed-out").addClass("hidden");
+    $("#name").text(user.displayName);
+    $("#email").text(user.email);
+  };
+
+  // Displays the UI for a signed out user.
+  var handleSignedOutUser = function() {
+    $("#user-signed-in").removeClass();
+    $("#user-signed-in").addClass("hidden");
+    $("#user-signed-out").removeClass();
+    $("#user-signed-out").addClass("show");
+    ui.start('#firebaseui-container', getUiConfig());
+  };
+
+  // Listen to change in auth state so it displays the correct UI for when
+  // the user is signed in or not.
+  firebase.auth().onAuthStateChanged(function(user) {
+    $("#loading").removeClass();
+    $("#loading").addClass("hidden");
+    $("#loaded").removeClass();
+    $("#loaded").addClass("show");
+    user ? handleSignedInUser(user) : handleSignedOutUser();
+  });
+
+  // Deletes the user's account.
+  var deleteAccount = function() {
+    firebase.auth().currentUser.delete().catch(function(error) {
+      if (error.code == 'auth/requires-recent-login') {
+        // The user's credential is too old. She needs to sign in again.
+        firebase.auth().signOut().then(function() {
+          // The timeout allows the message to be displayed after the UI has
+          // changed to the signed out state.
+          setTimeout(function() {
+            alert('Please sign in again to delete your account.');
+          }, 1);
+        });
+      }
+    });
+  };
+
+  // Initializes the FirebaseUI app.
+  var initApp = function() {
+    document.getElementById('sign-in-with-redirect').addEventListener('click', signInWithRedirect);
+    document.getElementById('sign-out').addEventListener('click', function() {
+      firebase.auth().signOut();
+    });
+    document.getElementById('delete-account').addEventListener('click', function() {
+      deleteAccount();
+    });
+  };
+
+  window.addEventListener('load', initApp);
 });
 
+//
 function displayShowPoster() {
+  var show = $(this).attr("data-name");
+  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        var show = $(this).attr("data-name");
-        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+  // Creates AJAX call for the specific movie button being clicked
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).done(function(response) {
 
-        // Creates AJAX call for the specific movie button being clicked
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-
-          // Creates a div to hold the movie
-          $(".show-poster").empty();
-          // Retrieves the Rating Data
-          console.log(response);
-          $("#show-poster").html(response.Poster);
- });
-
-      }
+    // Creates a div to hold the movie
+    $(".show-poster").empty();
+    // Retrieves the Rating Data
+    console.log(response);
+    $("#show-poster").html(response.Poster);
+});
 
 function displayShowInfo() {
+  var show = $(this).attr("data-name");
+  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        var show = $(this).attr("data-name");
-        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+  // Creates AJAX call for the specific movie button being clicked
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).done(function(response) {
 
-        // Creates AJAX call for the specific movie button being clicked
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-
-          // Creates a div to hold the movie
-          $(".show-info").empty();
-          // Retrieves the Rating Data
-          console.log(response);
-          $("#show-info").html("<p>Title: " + response.Title + "</p>");
-          $("#show-info").html("<p>Year: " + response.Year + "</p>");
-          $("#show-info").html("<p>Genre: " + response.Genre + "</p");
-          $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
- });
-
-      }
+    // Creates a div to hold the movie
+    $(".show-info").empty();
+    // Retrieves the Rating Data
+    console.log(response);
+    $("#show-info").html("<p>Title: " + response.Title + "</p>");
+    $("#show-info").html("<p>Year: " + response.Year + "</p>");
+    $("#show-info").html("<p>Genre: " + response.Genre + "</p");
+    $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
+});
 
 function displayShowPlot() {
+  var show = $(this).attr("data-name");
+  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        var show = $(this).attr("data-name");
-        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+  // Creates AJAX call for the specific movie button being clicked
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).done(function(response) {
 
-        // Creates AJAX call for the specific movie button being clicked
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-
-          // Creates a div to hold the movie
-          $(".show-plot").empty();
-          // Retrieves the Rating Data
-          console.log(response);
-          $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
- });
-
-      }
+    // Creates a div to hold the movie
+    $(".show-plot").empty();
+    // Retrieves the Rating Data
+    console.log(response);
+    $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
+});

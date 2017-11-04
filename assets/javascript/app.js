@@ -19,20 +19,24 @@ $(document).ready(function(){
 		event.preventDefault();
     var buttonName = [];
 		listname = $("#listItem").val().trim();
-    buttonName.push(listname);
-		var button = $("<button>").addClass("btn-lg btn-default listSearch");
-		button.attr("data-title", listname);
-		button.html(listname);
-		var deleteButton = $("<button>").addClass("btn-sm btn-danger deleteButton");
-		deleteButton.html("X");
-		deleteButton.attr("data-title", listname);
-		var div = $("<div>");
-		div.addClass("pull-left buttonDiv");
-		div.attr("data-title", listname);
-		div.append(deleteButton);
-		div.append(button);
-		$("#list").append(div);
-		$("#listItem").val("");
+  //   buttonName.push(listname);
+		// var button = $("<button>").addClass("btn-lg btn-default listSearch");
+		// button.attr("data-title", listname);
+		// button.html(listname);
+		// var deleteButton = $("<button>").addClass("btn-sm btn-danger deleteButton");
+		// deleteButton.html("X");
+		// deleteButton.attr("data-title", listname);
+		// var div = $("<div>");
+		// div.addClass("pull-left buttonDiv");
+		// div.attr("data-title", listname);
+		// div.append(deleteButton);
+		// div.append(button);
+		// $("#list").append(div);
+		// $("#listItem").val("");
+
+    //show poster as clickable item in library (#list)
+    console.log(listname);
+    populateShows(listname);
 	});
 
   //
@@ -126,7 +130,8 @@ $(document).ready(function(){
   };
 
   window.addEventListener('load', initApp);
-});
+});  // end of document.ready!
+
 
 //
 function displayShowPoster() {
@@ -144,7 +149,10 @@ function displayShowPoster() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-poster").html(response.Poster);
-});
+
+    // need to add functionality 
+  });
+}
 
 function displayShowInfo() {
   var show = $(this).attr("data-name");
@@ -164,7 +172,8 @@ function displayShowInfo() {
     $("#show-info").html("<p>Year: " + response.Year + "</p>");
     $("#show-info").html("<p>Genre: " + response.Genre + "</p");
     $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
-});
+  });
+}
 
 function displayShowPlot() {
   var show = $(this).attr("data-name");
@@ -181,4 +190,73 @@ function displayShowPlot() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
-});
+  });
+}
+
+
+//save show name and apiurl to local
+function saveShowLocalStor(apiURL, showName) {
+  localStorage["name"] = showName;
+  localStorage["url"] = apiURL;
+}
+
+// populate show searched in list ID after search
+function populateShows(show) {
+    var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+    console.log(showURL);
+
+    $.ajax({
+    url: showURL,
+    method: "GET"
+    }).done(function(response) {
+      
+      console.log(response.Poster);
+      console.log(response.Title);
+
+      // add a
+      var a = $("<a>");
+      a.attr("href", "../../info.html");
+
+      //new div for show
+      var div = $("<div>");
+      $("#list").append(div);
+      div.addClass("pull-left show-div");
+      div.attr("data-show", response.Title);
+      div.attr()
+
+      // poster for the show
+      var poster = $("<img>");
+      poster.addClass("thumbnail");
+      poster.attr("src", response.Poster);
+
+      //del button to show div
+      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      deleteButton.html("X");
+      deleteButton.attr("data-show", response.Title);
+
+      var title = $("<h2>");
+      title.html(response.Title);
+
+      //append img and delete button to div
+      a.append(div);
+      div.append(deleteButton);
+      div.append(poster);
+      div.append()
+
+      // buttonName.push(listname);
+      // var button = $("<button>").addClass("btn-lg btn-default listSearch");
+      // button.attr("data-title", listname);
+      // button.html(listname);
+      // var div = $("<div>");
+      // div.addClass("pull-left buttonDiv");
+      // div.attr("data-title", listname);
+      // div.append(deleteButton);
+      // div.append(button);
+      // // $("#list").append(div);
+      // // $("#listItem").val("");
+
+      console.log(response.Poster);
+      console.log(response.Title);
+    });
+}
+

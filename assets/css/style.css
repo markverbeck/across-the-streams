@@ -1,0 +1,20 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	background: url("../images/background.png");
+	color: white;
+	font-family: 'Martel Sans', sans-serif;
+}
+
+.navbar {
+	background-color: #004053;
+	margin-bottom: 0px;
+}
+
+#logo {
+	margin-top: 5px;
+}
+

@@ -71,16 +71,47 @@ window.addEventListener('load', function() {
 
 // submit/delete buttons  MV
 $(document).ready(function(){
-
-
 	$("#submit").on("click", function(){
-		event.preventDefault();
-    var buttonName = [];
-		listname = $("#listItem").val().trim();
-    buttonName.push(listname);
-		var button = $("<button>").addClass("btn-lg btn-default listSearch");
-		button.attr("data-title", listname);
-		button.html(listname);
+    event.preventDefault();
+    var show = [];
+
+    function displayPoster() {
+
+        var show = $(this).attr("list");
+        var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+
+        // Creates AJAX call for the specific show button being clicked
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
+
+          // Creates a div to hold the show
+          $(".list").empty();
+          // Retrieves the Rating Data
+          console.log(response);
+          $("#list").html(response.Poster);
+ });
+
+      }
+
+function renderButtons() {
+        // Loops through the array of movies
+        for (var i = 0; i < show.length; i++) {
+          // Then dynamicaly generates buttons for each movie in the array
+          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+          var a = $("<button>");
+          // Adds a class of movie to our button
+          a.addClass("show");
+          // Added a data-attribute
+          a.attr("list", show[i]);
+          // Provided the initial button text
+          a.text(show[i]);
+          // Added the button to the buttons-view div
+          $("#list").append(a);
+        }
+      }
+	});
 		var deleteButton = $("<button>").addClass("btn-sm btn-danger deleteButton");
 		deleteButton.html("X");
 		deleteButton.attr("data-title", listname);
@@ -100,20 +131,20 @@ $(document).ready(function(){
 
 	})
 	
-});
+;
 
 function displayShowPoster() {
 
         var show = $(this).attr("data-name");
         var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        // Creates AJAX call for the specific movie button being clicked
+        // Creates AJAX call for the specific show button being clicked
         $.ajax({
           url: queryURL,
           method: "GET"
         }).done(function(response) {
 
-          // Creates a div to hold the movie
+          // Creates a div to hold the show
           $(".show-poster").empty();
           // Retrieves the Rating Data
           console.log(response);
@@ -127,13 +158,13 @@ function displayShowInfo() {
         var show = $(this).attr("data-name");
         var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        // Creates AJAX call for the specific movie button being clicked
+        // Creates AJAX call for the specific show button being clicked
         $.ajax({
           url: queryURL,
           method: "GET"
         }).done(function(response) {
 
-          // Creates a div to hold the movie
+          // Creates a div to hold the show
           $(".show-info").empty();
           // Retrieves the Rating Data
           console.log(response);
@@ -150,13 +181,13 @@ function displayShowPlot() {
         var show = $(this).attr("data-name");
         var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-        // Creates AJAX call for the specific movie button being clicked
+        // Creates AJAX call for the specific show button being clicked
         $.ajax({
           url: queryURL,
           method: "GET"
         }).done(function(response) {
 
-          // Creates a div to hold the movie
+          // Creates a div to hold the show
           $(".show-plot").empty();
           // Retrieves the Rating Data
           console.log(response);

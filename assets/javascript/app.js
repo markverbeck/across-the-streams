@@ -1,3 +1,4 @@
+// initialize firebase
 var config = {
   apiKey: "AIzaSyAUfx2zzGieGetCyObO9plSOpAY1pEUpvo",
   authDomain: "across-the-streams.firebaseapp.com",
@@ -6,43 +7,17 @@ var config = {
   storageBucket: "across-the-streams.appspot.com",
   messagingSenderId: "249811555949"
 };
+
 firebase.initializeApp(config);
 
-var listname;
+// global variables
+var listName;
+var showNames = [];
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
-// submit/delete buttons  MV
+// document ready
 $(document).ready(function(){
-  //
-	$("#submit").on("click", function(){
-		event.preventDefault();
-    var buttonName = [];
-		listname = $("#listItem").val().trim();
-  //   buttonName.push(listname);
-		// var button = $("<button>").addClass("btn-lg btn-default listSearch");
-		// button.attr("data-title", listname);
-		// button.html(listname);
-		// var deleteButton = $("<button>").addClass("btn-sm btn-danger deleteButton");
-		// deleteButton.html("X");
-		// deleteButton.attr("data-title", listname);
-		// var div = $("<div>");
-		// div.addClass("pull-left buttonDiv");
-		// div.attr("data-title", listname);
-		// div.append(deleteButton);
-		// div.append(button);
-		// $("#list").append(div);
-		// $("#listItem").val("");
-
-    //show poster as clickable item in library (#list)
-    console.log(listname);
-    populateShows(listname);
-	});
-
-  //
-	$(document).on("click",".deleteButton", function(){
-		$(this).parent().remove();
-	});	
 
   // The FirebaseUI config.
   function getUiConfig() {
@@ -130,10 +105,30 @@ $(document).ready(function(){
   };
 
   window.addEventListener('load', initApp);
+
+  // submit button
+  $("#submit").on("click", function(){
+    event.preventDefault();
+    listName = $("#listItem").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(listName);
+    populateShows(listName);
+
+    $("#listItem").val("");
+  });
+
+  // delete button
+  $(document).on("click", ".delete-button", function(){
+    $(this).parent().remove();
+
+    // ------ > add code for removal from firebase here
+  }); 
+
 });  // end of document.ready!
 
 
-//
+// display poster on info page
 function displayShowPoster() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -154,6 +149,7 @@ function displayShowPoster() {
   });
 }
 
+// display show info on info page
 function displayShowInfo() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -175,6 +171,7 @@ function displayShowInfo() {
   });
 }
 
+// display show plot on info page
 function displayShowPlot() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -198,6 +195,8 @@ function displayShowPlot() {
 function saveShowLocalStor(apiURL, showName) {
   localStorage["name"] = showName;
   localStorage["url"] = apiURL;
+
+  console.log(localStorage);
 }
 
 // populate show searched in list ID after search
@@ -213,50 +212,39 @@ function populateShows(show) {
       console.log(response.Poster);
       console.log(response.Title);
 
-      // add a
+      // add href to poster/title
       var a = $("<a>");
-      a.attr("href", "../../info.html");
+      a.attr("href", "/info.html");
 
       //new div for show
       var div = $("<div>");
-      $("#list").append(div);
       div.addClass("pull-left show-div");
       div.attr("data-show", response.Title);
-      div.attr()
 
       // poster for the show
       var poster = $("<img>");
+      poster.attr("href", "/info.html");
       poster.addClass("thumbnail");
       poster.attr("src", response.Poster);
 
-      //del button to show div
+      //del button 
       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
       deleteButton.html("X");
       deleteButton.attr("data-show", response.Title);
 
-      var title = $("<h2>");
-      title.html(response.Title);
+      //title 
+      var title = $("<h3>");
+      title.text(response.Title);
 
       //append img and delete button to div
-      a.append(div);
       div.append(deleteButton);
-      div.append(poster);
-      div.append()
+      div.append(a);
+      a.append(poster);
+      a.append(title);
+      $("#list").append(div);
 
-      // buttonName.push(listname);
-      // var button = $("<button>").addClass("btn-lg btn-default listSearch");
-      // button.attr("data-title", listname);
-      // button.html(listname);
-      // var div = $("<div>");
-      // div.addClass("pull-left buttonDiv");
-      // div.attr("data-title", listname);
-      // div.append(deleteButton);
-      // div.append(button);
-      // // $("#list").append(div);
-      // // $("#listItem").val("");
-
-      console.log(response.Poster);
-      console.log(response.Title);
+      //push show to shows array
+      showNames.push(response.Title);
     });
 }
 

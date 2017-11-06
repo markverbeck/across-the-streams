@@ -46,3 +46,12 @@ body {
 .firstEntry{
 	margin-right: 1%;
 }
+
+h3 {
+	color: white;
+}
+
+h3:hover {
+	text-decoration-color: white;
+	text-decoration: underline;
+}

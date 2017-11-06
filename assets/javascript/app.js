@@ -10,14 +10,72 @@ var config = {
 
 firebase.initializeApp(config);
 
+// firebase variables
+var database = firebase.database();
+var ref;  // ----> this needs to have reference added for user and be set after authentication
+
 // global variables
 var listName;
 var showNames = [];
+var user;
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
 // document ready
 $(document).ready(function(){
+
+  user = sessionStorage.getItem("user");
+//   ref = database.ref(user);
+
+//   // get shows from db
+//   ref.on("child_added", function(snapshot) {
+
+//     var showData = snapshot.val();
+//     var currentURL = showData.showURL;
+
+//     console.log(currentURL);
+
+//     $.ajax({
+//     url: currentURL,
+//     method: "GET"
+//     }).done(function(response) {
+      
+//       console.log(response.Poster);
+//       console.log(response.Title);
+
+//       // add href to poster/title
+//       var a = $("<a>");
+//       a.attr("href", "info.html");
+
+//       //new div for show
+//       var div = $("<div>");
+//       div.addClass("pull-left show-div");
+//       div.attr("data-show", response.Title);
+
+//       // poster for the show
+//       var poster = $("<img>");
+//       poster.attr("href", "/info.html");
+//       poster.addClass("thumbnail");
+//       poster.attr("src", response.Poster);
+//       poster.attr("width", "150");
+
+//       //del button 
+//       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+//       deleteButton.html("X");
+//       deleteButton.attr("data-show", response.Title);
+
+//       //title 
+//       var title = $("<h3>");
+//       title.text(response.Title);
+
+//       //append img and delete button to div
+//       div.append(deleteButton);
+//       div.append(a);
+//       a.append(poster);
+//       a.append(title);
+//       $("#list").append(div);
+//     });
+//   });
 
   // The FirebaseUI config.
   function getUiConfig() {
@@ -125,6 +183,20 @@ $(document).ready(function(){
     // ------ > add code for removal from firebase here
   }); 
 
+  // temp login - remove after fb auth is working
+  $("#temp-login").on("click", function(){
+    event.preventDefault();
+    user = $("#temp-login-input").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(user);
+    saveUserSession(user);    
+
+    $("#temp-login-input").val("");
+
+    location.href = "index.html";
+  });
+
 });  // end of document.ready!
 
 
@@ -132,11 +204,18 @@ $(document).ready(function(){
 
 
 //save show name and apiurl to local
-function saveShowLocalStor(apiURL, showName) {
-  localStorage["name"] = showName;
-  localStorage["url"] = apiURL;
+function saveShowLocalInfo(apiURL, showName) {
+  localStorage.setItem("name", showName);
+  localStorage.setItem("url", apiURL);
 
   console.log(localStorage);
+}
+
+//save user name to sessionStorage
+function saveUserSession(userName) {
+  sessionStorage.setItem("user", userName);
+
+  console.log(sessionStorage);
 }
 
 // populate show searched in list ID after search
@@ -186,8 +265,12 @@ function populateShows(show) {
       a.append(title);
       $("#list").append(div);
 
-      //push show to shows array
-      showNames.push(response.Title);
+      //push show to shows db
+      var userRef = user + "/shows/";
+      database.ref(userRef).push({
+        showName: response.Title,
+        showURL: showURL,
+      });
     });
 }
 

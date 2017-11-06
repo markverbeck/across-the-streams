@@ -61,3 +61,8 @@ body {
 	margin-right: 10px;
 	margin-left: 10px;
 }
+
+#show-info, #show-plot, #show-times {
+	font-size: 25px;
+	text-shadow: 2px 2px black;
+}

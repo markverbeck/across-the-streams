@@ -47,15 +47,17 @@ body {
 	margin-right: 1%;
 }
 
-h3 {
+.showLink {
 	color: white;
+	width: 150px;
 }
 
-h3:hover {
+.showLink:hover {
 	text-decoration: underline;
 	text-decoration-color: white;
 }
 
-.thumbnail {
-	margin: 30px;
+.show-div {
+	margin-right: 10px;
+	margin-left: 10px;
 }

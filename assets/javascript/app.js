@@ -226,6 +226,7 @@ function populateShows(show) {
       poster.attr("href", "/info.html");
       poster.addClass("thumbnail");
       poster.attr("src", response.Poster);
+      poster.attr("width", "150");
 
       //del button 
       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");

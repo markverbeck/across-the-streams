@@ -1,3 +1,4 @@
+// initialize firebase
 var config = {
   apiKey: "AIzaSyAUfx2zzGieGetCyObO9plSOpAY1pEUpvo",
   authDomain: "across-the-streams.firebaseapp.com",
@@ -6,39 +7,17 @@ var config = {
   storageBucket: "across-the-streams.appspot.com",
   messagingSenderId: "249811555949"
 };
+
 firebase.initializeApp(config);
 
-var listname;
+// global variables
+var listName;
+var showNames = [];
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
-// submit/delete buttons  MV
+// document ready
 $(document).ready(function(){
-  //
-	$("#submit").on("click", function(){
-		event.preventDefault();
-    var buttonName = [];
-		listname = $("#listItem").val().trim();
-    buttonName.push(listname);
-		var button = $("<button>").addClass("btn-lg btn-default listSearch");
-		button.attr("data-title", listname);
-		button.html(listname);
-		var deleteButton = $("<button>").addClass("btn-sm btn-danger deleteButton");
-		deleteButton.html("X");
-		deleteButton.attr("data-title", listname);
-		var div = $("<div>");
-		div.addClass("pull-left buttonDiv");
-		div.attr("data-title", listname);
-		div.append(deleteButton);
-		div.append(button);
-		$("#list").append(div);
-		$("#listItem").val("");
-	});
-
-  //
-	$(document).on("click",".deleteButton", function(){
-		$(this).parent().remove();
-	});	
 
   // The FirebaseUI config.
   function getUiConfig() {
@@ -126,9 +105,30 @@ $(document).ready(function(){
   };
 
   window.addEventListener('load', initApp);
-});
 
-//
+  // submit button
+  $("#submit").on("click", function(){
+    event.preventDefault();
+    listName = $("#listItem").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(listName);
+    populateShows(listName);
+
+    $("#listItem").val("");
+  });
+
+  // delete button
+  $(document).on("click", ".delete-button", function(){
+    $(this).parent().remove();
+
+    // ------ > add code for removal from firebase here
+  }); 
+
+});  // end of document.ready!
+
+
+// display poster on info page
 function displayShowPoster() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -144,8 +144,12 @@ function displayShowPoster() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-poster").html(response.Poster);
-});
 
+    // need to add functionality 
+  });
+}
+
+// display show info on info page
 function displayShowInfo() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -164,8 +168,10 @@ function displayShowInfo() {
     $("#show-info").html("<p>Year: " + response.Year + "</p>");
     $("#show-info").html("<p>Genre: " + response.Genre + "</p");
     $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
-});
+  });
+}
 
+// display show plot on info page
 function displayShowPlot() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -181,4 +187,65 @@ function displayShowPlot() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
-});
+  });
+}
+
+
+//save show name and apiurl to local
+function saveShowLocalStor(apiURL, showName) {
+  localStorage["name"] = showName;
+  localStorage["url"] = apiURL;
+
+  console.log(localStorage);
+}
+
+// populate show searched in list ID after search
+function populateShows(show) {
+    var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+    console.log(showURL);
+
+    $.ajax({
+    url: showURL,
+    method: "GET"
+    }).done(function(response) {
+      
+      console.log(response.Poster);
+      console.log(response.Title);
+
+      // add href to poster/title
+      var a = $("<a>");
+      a.attr("href", "/info.html");
+
+      //new div for show
+      var div = $("<div>");
+      div.addClass("pull-left show-div");
+      div.attr("data-show", response.Title);
+
+      // poster for the show
+      var poster = $("<img>");
+      poster.attr("href", "/info.html");
+      poster.addClass("thumbnail");
+      poster.attr("src", response.Poster);
+      poster.attr("width", "150");
+
+      //del button 
+      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      deleteButton.html("X");
+      deleteButton.attr("data-show", response.Title);
+
+      //title 
+      var title = $("<h3>");
+      title.text(response.Title);
+
+      //append img and delete button to div
+      div.append(deleteButton);
+      div.append(a);
+      a.append(poster);
+      a.append(title);
+      $("#list").append(div);
+
+      //push show to shows array
+      showNames.push(response.Title);
+    });
+}
+

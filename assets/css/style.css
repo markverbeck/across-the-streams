@@ -55,3 +55,7 @@ h3:hover {
 	text-decoration-color: white;
 	text-decoration: underline;
 }
+
+.thumbnail {
+	margin: 5px;
+}

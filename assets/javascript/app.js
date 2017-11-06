@@ -200,67 +200,7 @@ $(document).ready(function(){
 });  // end of document.ready!
 
 
-// display poster on info page
-function displayShowPoster() {
-  var show = $(this).attr("data-name");
-  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
-  // Creates AJAX call for the specific show button being clicked
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).done(function(response) {
-
-    // Creates a div to hold the show
-    $(".show-poster").empty();
-    // Retrieves the poster Data
-    console.log(response);
-    $("#show-poster").html(response.Poster);
-
-    // need to add functionality 
-  });
-}
-
-// display show info on info page
-function displayShowInfo() {
-  var show = $(this).attr("data-name");
-  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-
-  // Creates AJAX call for the specific show button being clicked
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).done(function(response) {
-
-    // Creates a div to hold the show
-    $(".show-info").empty();
-    // Retrieves the title, year, genre, and number of seasons Data
-    console.log(response);
-    $("#show-info").html("<p>Title: " + response.Title + "</p>");
-    $("#show-info").html("<p>Year: " + response.Year + "</p>");
-    $("#show-info").html("<p>Genre: " + response.Genre + "</p");
-    $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
-  });
-}
-
-// display show plot on info page
-function displayShowPlot() {
-  var show = $(this).attr("data-name");
-  var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-
-  // Creates AJAX call for the specific Show button being clicked
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).done(function(response) {
-
-    // Creates a div to hold the Show
-    $(".show-plot").empty();
-    // Retrieves the Plot Data
-    console.log(response);
-    $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
-  });
-}
 
 
 //save show name and apiurl to local
@@ -293,7 +233,8 @@ function populateShows(show) {
 
       // add href to poster/title
       var a = $("<a>");
-      a.attr("href", "info.html");
+      a.attr("href", "info.html?name="+response.Title);
+
 
       //new div for show
       var div = $("<div>");
@@ -314,6 +255,7 @@ function populateShows(show) {
 
       //title 
       var title = $("<h3>");
+      title.addClass("showLink")
       title.text(response.Title);
 
       //append img and delete button to div

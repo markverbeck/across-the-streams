@@ -73,6 +73,11 @@ function displayShowPlot() {
   });
 }
 
+function displayShowTimes() {
+  var queryURL = "http://data.tmsapi.com/v1.1/programs/newShowAirings?lineupId=USA-TX42500-X&startDateTime=2017-11-07T01%3A30Z&endDateTime=2017-11-07T04%3A30Z&includeAdult=false&imageSize=Md&imageAspectTV=2x3&imageText=true&api_key=vvx25ta65sfqyzy3c42sh7pc";
+  console.log(queryURL);
+}
+
 displayShowPoster();
 displayShowInfo();
 displayShowPlot();

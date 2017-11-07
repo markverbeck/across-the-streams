@@ -178,9 +178,13 @@ $(document).ready(function(){
 
   // delete button
   $(document).on("click", ".delete-button", function(){
+    
+    console.log(this.data-show);
+
     $(this).parent().remove();
 
-    // ------ > add code for removal from firebase here
+    //remove from db
+    database.ref(this.value).remove();
   }); 
 
   // temp login - remove after fb auth is working

@@ -133,10 +133,44 @@ $(document).ready(function(){
   window.addEventListener('load', initApp);
 });
 
+
+  // submit button
+  $("#submit").on("click", function(){
+    event.preventDefault();
+    listName = $("#listItem").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(listName);
+    populateShows(listName);
+
+    $("#listItem").val("");
+  });
+
+  // delete button
+  $(document).on("click", ".delete-button", function(){
+    
+    console.log(this.data-show);
+
+    $(this).parent().remove();
+
+    //remove from db
+    database.ref(this.value).remove();
+  }); 
+
+  // temp login - remove after fb auth is working
+  $("#temp-login").on("click", function(){
+    event.preventDefault();
+    user = $("#temp-login-input").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(user);
+    saveUserSession(user);    
+
 //
 function displayShowPoster() {
   var show = $(this).attr("data-name");
   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+
 
   // Creates AJAX call for the specific movie button being clicked
   $.ajax({

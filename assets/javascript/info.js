@@ -6,7 +6,7 @@ function getParameterByName(name, url) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+};
 
 var name = getParameterByName("name");
 console.log(name);
@@ -31,7 +31,7 @@ function displayShowPoster() {
       $("#show-poster").append(poster);
 
   });
-}
+};
 
 // display show info on info page
 function displayShowInfo() {
@@ -53,7 +53,7 @@ function displayShowInfo() {
     $("#show-info").append("<p>Genre: " + response.Genre + "</p");
     $("#show-info").append("<p>Number of Seasons: " + response.totalSeasons + "</p>");
   });
-}
+};
 
 // display show plot on info page
 function displayShowPlot() {
@@ -71,13 +71,35 @@ function displayShowPlot() {
     console.log(response);
     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
   });
-}
+};
 
-function displayShowTimes() {
-  var queryURL = "http://data.tmsapi.com/v1.1/programs/newShowAirings?lineupId=USA-TX42500-X&startDateTime=2017-11-07T01%3A30Z&endDateTime=2017-11-07T04%3A30Z&includeAdult=false&imageSize=Md&imageAspectTV=2x3&imageText=true&api_key=vvx25ta65sfqyzy3c42sh7pc";
-  console.log(queryURL);
-}
+var displayShowTimes = function(){
+    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + name;
+
+    $.ajax({
+      url: api,
+        method: "GET"
+    }).done(function(response){
+
+      $("show-times").empty();
+      console.log(response);
+      
+      var time = convert(response.schedule.time);
+      console.log(time);
+
+      $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");
+      $("#show-times").append("<p>Time: " + time + " EST</p>");
+      $("#show-times").append("<p>Network: " + response.network.name + "</p>");
+      $("#show-times").append("<p>Status: " + response.status + "</p>");
+    });
+
+var convert = function (input) {
+    return moment(input, 'HH:mm:ss').format('hh:mm A');
+  };
+};
+
 
 displayShowPoster();
 displayShowInfo();
 displayShowPlot();
+displayShowTimes();

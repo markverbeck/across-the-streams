@@ -2,12 +2,20 @@
 <html>
 <head>
 	<title>Across The Networks</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.js"></script>
+<<<<<<< HEAD
+	<script src="https://use.fontawesome.com/b7e3bcf6e1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+=======
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 	<script src="https://use.fontawesome.com/b7e3bcf6e1.js"></script>
+>>>>>>> cb6a9b07e5459b5bb219daf04612a7576db23865
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.css" />
 	<link href="https://fonts.googleapis.com/css?family=Martel+Sans" rel="stylesheet">
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png"/>
@@ -15,10 +23,6 @@
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-
-	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="assets/javascript/app.js"></script>
 
 	<!-- Nav Bar -->
 	<nav class="navbar navbar-inverse">
@@ -96,6 +100,19 @@
 				<div id="list"></div>
 			</div>
 		</div>
+	</div>
+
+	<div id="in-lib-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-header">
+        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        	<h3 id="myModalLabel">Uh-oh...</h3>
+    	</div>
+    	<div class="modal-body">
+        	<p>This show already exists in your library.</p>
+    	</div>
+    	<div class="modal-footer">
+        	<button class="btn" data-dismiss="modal" aria-hidden="true">Ok</button>
+    	</div>
 	</div>
 
 </body>

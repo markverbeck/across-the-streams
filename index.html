@@ -8,7 +8,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://use.fontawesome.com/b7e3bcf6e1.js"></script>
 	<script src="assets/javascript/app.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.4.1/firebaseui.css" />
 	<link href="https://fonts.googleapis.com/css?family=Martel+Sans" rel="stylesheet">
 	<link rel="shortcut icon" type="image/png" href="assets/images/favicon.png"/>
@@ -22,28 +21,25 @@
 	<script src="assets/javascript/app.js"></script>
 
 	<!-- Nav Bar -->
-	
 	<nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span> 
-	      </button>
-	      <a class="navbar-brand" href="index.html">Across The Networks</a>
+	      <a class="navbar-brand" href="#">Across The Networks</a>
 	    </div>
-      
-	    <div class="collapse navbar-collapse" id="myNavbar">
-	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="index.html">Home</a></li>
-		    <li><a href="info.html">Info</a></li>
-	      </ul>
-	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-	      </ul>
-	    </div>
-
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="#">Home</a></li>
+	      <li><a href="#">link?</a></li>
+	      <li><a href="#">link?</a></li>
+	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+	    	<div id="user-signed-in" class="hidden">
+	    		<li id="name"></li>
+					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+	    	</div>
+	    	<div id="user-signed-out" class="hidden">
+					<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	    	</div>
+	    </ul>
 	  </div>
 	</nav>
 
@@ -63,9 +59,10 @@
 			<div class="col-md-12 text-center">
 				<h2>Add Show to Library!</h2>
 				<form class="form-inline">
-				  	<div class="form-group">
-				    	<input type="text" class="form-control" id="listItem">
-						<button id="submit" type="submit" class="btn btn-default">Submit</button>
+				  <div class="form-group">
+				    <input type="text" class="form-control" id="listItem">
+				  
+					<button id="submit" type="submit" class="btn btn-default">Submit</button>
 					</div>
 				</form>
 		</div>

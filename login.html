@@ -35,13 +35,17 @@
 		    <li><a href="info.html">Info</a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
-	      	<div id="user-signed-in" class="hidden">
-	    		<li id="name"></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-	    	</div>
-	    	<div id="user-signed-out" class="hidden">
-	    		<li class="active"><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-	    	</div>
+	      	<!-- Don't touch this area unless you want to break OAuth -->
+	      	<div id="loading">Loading...</div>
+		    	<div id="loaded" class="hidden">
+						<div id="user-signed-in" class="hidden">
+			    		<li id="name"></li>
+							<li><a href="#"><span class="glyphicon glyphicon-log-out" id="sign-out"></span> Logout</a></li>
+			    	</div>
+			    	<div id="user-signed-out" class="hidden">
+							<li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			    	</div>
+		    	</div>
 	      </ul>
 	    </div>
 	  </div>

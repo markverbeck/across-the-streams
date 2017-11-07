@@ -58,17 +58,7 @@ $(document).ready(function(){
   }
 
   // Initialize the FirebaseUI Widget using Firebase.
-  var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-  // The URL of the FirebaseUI standalone widget.
-  function getWidgetUrl() {
-    return '/widget#recaptcha=' + getRecaptchaMode();
-  }
-
-  // Redirects to the FirebaseUI widget.
-  var signInWithRedirect = function() {
-    window.location.assign(getWidgetUrl());
-  };
+  var currentUser = null;
 
   // Displays the UI for a signed in user.
   var handleSignedInUser = function(user) {
@@ -77,7 +67,6 @@ $(document).ready(function(){
     $("#user-signed-out").removeClass();
     $("#user-signed-out").addClass("hidden");
     $("#name").text(user.displayName);
-    $("#email").text(user.email);
     uid = user.uid;
   };
 
@@ -87,7 +76,6 @@ $(document).ready(function(){
     $("#user-signed-in").addClass("hidden");
     $("#user-signed-out").removeClass();
     $("#user-signed-out").addClass("show");
-    ui.start('#firebaseui-container', getUiConfig());
   };
 
   // Listen to change in auth state so it displays the correct UI for when
@@ -100,33 +88,13 @@ $(document).ready(function(){
     user ? handleSignedInUser(user) : handleSignedOutUser();
   });
 
-  // Deletes the user's account.
-  var deleteAccount = function() {
-    firebase.auth().currentUser.delete().catch(function(error) {
-      if (error.code == 'auth/requires-recent-login') {
-        // The user's credential is too old. She needs to sign in again.
-        firebase.auth().signOut().then(function() {
-          // The timeout allows the message to be displayed after the UI has
-          // changed to the signed out state.
-          setTimeout(function() {
-            alert('Please sign in again to delete your account.');
-          }, 1);
-        });
-      }
-    });
-  };
-
   // Initializes the FirebaseUI app.
   var initApp = function() {
-    document.getElementById('sign-in-with-redirect').addEventListener('click', signInWithRedirect);
     document.getElementById('sign-out').addEventListener('click', function() {
       firebase.auth().signOut();
     });
-    document.getElementById('delete-account').addEventListener('click', function() {
-      deleteAccount();
-    });
-    if (user != null) {
-      handleSignedInUser(user);
+    if (currentUser != null) {
+      handleSignedInUser(currentUser);
     }
   };
 
@@ -164,7 +132,8 @@ $(document).ready(function(){
 
     //show poster as clickable item in library (#list)
     console.log(user);
-    saveUserSession(user);    
+    saveUserSession(user);
+  }); 
 
 //
 function displayShowPoster() {
@@ -183,7 +152,8 @@ function displayShowPoster() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-poster").html(response.Poster);
-});
+  });
+}
 
 function displayShowInfo() {
   var show = $(this).attr("data-name");
@@ -203,7 +173,8 @@ function displayShowInfo() {
     $("#show-info").html("<p>Year: " + response.Year + "</p>");
     $("#show-info").html("<p>Genre: " + response.Genre + "</p");
     $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
-});
+  });
+}
 
 function displayShowPlot() {
   var show = $(this).attr("data-name");
@@ -220,4 +191,5 @@ function displayShowPlot() {
     // Retrieves the Rating Data
     console.log(response);
     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
-});
+  });
+}

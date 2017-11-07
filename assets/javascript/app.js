@@ -19,6 +19,7 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
+var uid; // realized this global was never defined
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
@@ -60,6 +61,7 @@ $(document).ready(function(){
     $("#user-signed-in").addClass("hidden");
     $("#user-signed-out").removeClass();
     $("#user-signed-out").addClass("show");
+    $("#name").empty();
   };
 
   // Listen to change in auth state so it displays the correct UI for when

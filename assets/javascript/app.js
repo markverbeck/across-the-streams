@@ -12,11 +12,11 @@ firebase.initializeApp(config);
 
 // firebase variables
 var database = firebase.database();
-var ref;  // ----> this needs to have reference added for user and be set after authentication
+var ref; 
 
 // global variables
 var listName;
-var showNames = [];
+var showNames = [];  // may not need this as soon as we get fb pulls working
 var user;
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
@@ -25,57 +25,57 @@ var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response
 $(document).ready(function(){
 
   user = sessionStorage.getItem("user");
-//   ref = database.ref(user);
+  ref = database.ref(user + "/shows");
 
-//   // get shows from db
-//   ref.on("child_added", function(snapshot) {
+  // get shows from db
+  ref.on("child_added", function(snapshot) {
 
-//     var showData = snapshot.val();
-//     var currentURL = showData.showURL;
+    var showData = snapshot.val();
+    var currentURL = showData.showURL;
 
-//     console.log(currentURL);
+    console.log(currentURL);
 
-//     $.ajax({
-//     url: currentURL,
-//     method: "GET"
-//     }).done(function(response) {
+    $.ajax({
+    url: currentURL,
+    method: "GET"
+    }).done(function(response) {
       
-//       console.log(response.Poster);
-//       console.log(response.Title);
+      console.log(response.Poster);
+      console.log(response.Title);
 
-//       // add href to poster/title
-//       var a = $("<a>");
-//       a.attr("href", "info.html");
+      // add href to poster/title
+      var a = $("<a>");
+      a.attr("href", "info.html");
 
-//       //new div for show
-//       var div = $("<div>");
-//       div.addClass("pull-left show-div");
-//       div.attr("data-show", response.Title);
+      //new div for show
+      var div = $("<div>");
+      div.addClass("pull-left show-div");
+      div.attr("data-show", response.Title);
 
-//       // poster for the show
-//       var poster = $("<img>");
-//       poster.attr("href", "/info.html");
-//       poster.addClass("thumbnail");
-//       poster.attr("src", response.Poster);
-//       poster.attr("width", "150");
+      // poster for the show
+      var poster = $("<img>");
+      poster.attr("href", "/info.html");
+      poster.addClass("thumbnail");
+      poster.attr("src", response.Poster);
+      poster.attr("width", "150");
 
-//       //del button 
-//       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-//       deleteButton.html("X");
-//       deleteButton.attr("data-show", response.Title);
+      //del button 
+      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      deleteButton.html("X");
+      deleteButton.attr("data-show", response.Title);
 
-//       //title 
-//       var title = $("<h3>");
-//       title.text(response.Title);
+      //title 
+      var title = $("<h3>");
+      title.text(response.Title);
 
-//       //append img and delete button to div
-//       div.append(deleteButton);
-//       div.append(a);
-//       a.append(poster);
-//       a.append(title);
-//       $("#list").append(div);
-//     });
-//   });
+      //append img and delete button to div
+      div.append(deleteButton);
+      div.append(a);
+      a.append(poster);
+      a.append(title);
+      $("#list").append(div);
+    });
+  });
 
   // The FirebaseUI config.
   function getUiConfig() {
@@ -200,9 +200,6 @@ $(document).ready(function(){
 });  // end of document.ready!
 
 
-
-
-
 //save show name and apiurl to local
 function saveShowLocalInfo(apiURL, showName) {
   localStorage.setItem("name", showName);
@@ -266,11 +263,14 @@ function populateShows(show) {
       $("#list").append(div);
 
       //push show to shows db
-      var userRef = user + "/shows/";
+      var userRef = uid + "/shows/";
       database.ref(userRef).push({
         showName: response.Title,
         showURL: showURL,
       });
+
+      //save user uid to session storage
+      saveUserSession(uid);
     });
 }
 

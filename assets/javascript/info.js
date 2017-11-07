@@ -74,7 +74,7 @@ function displayShowPlot() {
 };
 
 var displayShowTimes = function(){
-    var api = "http://api.tvmaze.com/singlesearch/shows?q=" + name;
+    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + name;
 
     $.ajax({
       url: api,

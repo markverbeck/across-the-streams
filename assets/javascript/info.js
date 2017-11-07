@@ -49,6 +49,7 @@ function displayShowInfo() {
     console.log(response);
     $("#show-info").html("<p>Title: " + response.Title + "</p>");
     $("#show-info").append("<p>Year: " + response.Year + "</p>");
+    $("#show-info").append("<p>Actors: " + response.Actors + "</p>");
     $("#show-info").append("<p>Genre: " + response.Genre + "</p");
     $("#show-info").append("<p>Number of Seasons: " + response.totalSeasons + "</p>");
   });

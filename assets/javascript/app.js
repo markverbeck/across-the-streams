@@ -19,7 +19,8 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-var uid; // realized this global was never defined
+var userRef;
+var uid; // = "test-user";
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
@@ -88,7 +89,7 @@ $(document).ready(function(){
 // END FIREBASE LOGIN <-------
 
   user = sessionStorage.getItem("user");
-  ref = database.ref(user + "/shows");
+  ref = database.ref("users/" + user + "/shows/");
 
   // get shows from db
   ref.on("child_added", function(snapshot) {
@@ -160,22 +161,15 @@ $(document).ready(function(){
   $(document).on("click", ".delete-button", function(){
     $(this).parent().remove();
 
+    console.log(this);
+    console.log(userRef.child(this));
     // ------ > add code for removal from firebase here
+    userRef.child(this).remove();
+
   }); 
 
-  // // temp login - remove after fb auth is working
-  // $("#temp-login").on("click", function(){
-  //   event.preventDefault();
-  //   user = $("#temp-login-input").val().trim();
-
-  //   //show poster as clickable item in library (#list)
-  //   console.log(user);
-  //   saveUserSession(user);    
-
-  //   $("#temp-login-input").val("");
-
-  //   location.href = "index.html";
-  // });
+  //save user uid to session storage
+  saveUserSession(uid);
 
 });  // end of document.ready!
 
@@ -197,21 +191,45 @@ function saveUserSession(userName) {
 
 // populate show searched in list ID after search
 function populateShows(show) {
-    var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-    console.log(showURL);
+  var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
+  console.log(showURL);
 
-    $.ajax({
-    url: showURL,
-    method: "GET"
-    }).done(function(response) {
-      
-      console.log(response.Poster);
+  $.ajax({
+  url: showURL,
+  method: "GET"
+  }).done(function(response) {
+    
+    console.log(response.Poster);
+    console.log(response.Title);
+    console.log(showCounter);
+
+    //should we add to library
+    var addToLibrary = true;
+
+    console.log(addToLibrary);
+
+    // loop through shows
+    for (i = 0; i < showCounter; i++) {
+      console.log(showNames[i]);
       console.log(response.Title);
+      // check for title in showNames array
+      if (showNames[i] === response.Title) {
+        
+        console.log("movie alread exists in library");
 
+        // modal for already in library **FIX-ME - just dims screen
+        // $("#in-lib-modal").modal("show"); 
+        
+        // when exists already, don't add
+        addToLibrary = false;
+      }
+    }
+    
+    // add to library flag is true?... then do this   
+    if (addToLibrary) {
       // add href to poster/title
       var a = $("<a>");
       a.attr("href", "info.html?name="+response.Title);
-
 
       //new div for show
       var div = $("<div>");
@@ -243,105 +261,16 @@ function populateShows(show) {
       $("#list").append(div);
 
       //push show to shows db
-      var userRef = uid + "/shows/";
+      userRef = "users/" + uid + "/shows/";
+      var urlSub = response.Title + "/showURL"
       database.ref(userRef).push({
-        showName: response.Title,
-        showURL: showURL,
-      });
+        "showName": response.Title,
+        urlSub: showURL,
+       });
 
-    //save user uid to session storage
-    saveUserSession(uid);
+      // add the title to showName array and increment the showCounter for looping
+      showNames[showCounter] = response.Title;
+      showCounter++;
+    } 
   });
 }
-
-//   // submit button
-//   $("#submit").on("click", function(){
-//     event.preventDefault();
-//     listName = $("#listItem").val().trim();
-
-//     //show poster as clickable item in library (#list)
-//     console.log(listName);
-//     populateShows(listName);
-
-//     $("#listItem").val("");
-//   });
-
-//   // delete button
-//   $(document).on("click", ".delete-button", function(){
-    
-//     console.log(this.data-show);
-
-//     $(this).parent().remove();
-
-//     //remove from db
-//     database.ref(this.value).remove();
-//   }); 
-
-//   // temp login - remove after fb auth is working
-//   $("#temp-login").on("click", function(){
-//     event.preventDefault();
-//     user = $("#temp-login-input").val().trim();
-
-//     //show poster as clickable item in library (#list)
-//     console.log(user);
-//     saveUserSession(user);
-//   }); 
-
-// //
-// function displayShowPoster() {
-//   var show = $(this).attr("data-name");
-//   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-
-
-//   // Creates AJAX call for the specific movie button being clicked
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).done(function(response) {
-
-//     // Creates a div to hold the movie
-//     $(".show-poster").empty();
-//     // Retrieves the Rating Data
-//     console.log(response);
-//     $("#show-poster").html(response.Poster);
-//   });
-// }
-
-// function displayShowInfo() {
-//   var show = $(this).attr("data-name");
-//   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-
-//   // Creates AJAX call for the specific movie button being clicked
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).done(function(response) {
-
-//     // Creates a div to hold the movie
-//     $(".show-info").empty();
-//     // Retrieves the Rating Data
-//     console.log(response);
-//     $("#show-info").html("<p>Title: " + response.Title + "</p>");
-//     $("#show-info").html("<p>Year: " + response.Year + "</p>");
-//     $("#show-info").html("<p>Genre: " + response.Genre + "</p");
-//     $("#show-info").html("<p>Number of Seasons: " + response.totalSeasons + "</p>");
-//   });
-// }
-
-// function displayShowPlot() {
-//   var show = $(this).attr("data-name");
-//   var queryURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-
-//   // Creates AJAX call for the specific movie button being clicked
-//   $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).done(function(response) {
-
-//     // Creates a div to hold the movie
-//     $(".show-plot").empty();
-//     // Retrieves the Rating Data
-//     console.log(response);
-//     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
-//   });
-// }

@@ -62,6 +62,7 @@ $(document).ready(function(){
     $("#user-signed-in").addClass("hidden");
     $("#user-signed-out").removeClass();
     $("#user-signed-out").addClass("show");
+    $("#name").empty();
   };
 
   // Listen to change in auth state so it displays the correct UI for when

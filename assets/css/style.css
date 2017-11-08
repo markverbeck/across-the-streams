@@ -74,3 +74,8 @@ a {
 a:hover {
 	color: white;
 }
+
+.login {
+	background-color: #004053;
+	border-color: #004053;
+}

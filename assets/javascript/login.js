@@ -18,6 +18,7 @@ $(document).ready(function(){
 	// Initialize the FirebaseUI Widget using Firebase.
   var ui = new firebaseui.auth.AuthUI(firebase.auth());
   var currentUser = null;
+  var uid;
 
   // The URL of the FirebaseUI standalone widget.
   function getWidgetUrl() {

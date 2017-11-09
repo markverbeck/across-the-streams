@@ -90,12 +90,20 @@ var displayShowTimes = function(){
       } 
       else {
         time = convert(response.schedule.time);
+        time += " EST";
       }
-      console.log(time);
+      
+      var network;
+      if(response.network.name === null) {
+        network = response.webChannel.name;
+      }
+      else {
+        network = response.network.name;
+      }
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");
-      $("#show-times").append("<p>Time: " + time + " EST (" + response.status + ")</p>");
-      $("#show-times").append("<p>Network: " + response.network.name + response.webChannel.name + "</p>");
+      $("#show-times").append("<p>Time: " + time + " (" + response.status + ")</p>");
+      $("#show-times").append("<p>Network: " + network + "</p>");
     });
 
 var convert = function (input) {

@@ -94,7 +94,7 @@ var displayShowTimes = function(){
       }
       
       var network;
-      if(response.network.name === null) {
+      if(response.network.name == null) {
         network = response.webChannel.name;
       }
       else {

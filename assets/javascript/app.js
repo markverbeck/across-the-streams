@@ -19,8 +19,11 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-var userRef;
 var uid; // = "test-user";
+
+// firebase ref variables
+var userRef;
+var showRef;
 
 var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
 
@@ -85,7 +88,8 @@ $(document).ready(function(){
   };
 
   window.addEventListener('load', initApp);
-// END FIREBASE LOGIN <-------
+
+// -------> END FIREBASE LOGIN CODE <-------
 
   user = sessionStorage.getItem("user");
   ref = database.ref("users/" + user + "/shows/");
@@ -160,10 +164,10 @@ $(document).ready(function(){
   $(document).on("click", ".delete-button", function(){
     $(this).parent().remove();
 
-    console.log(this);
-    console.log(userRef.child(this));
+    console.log(this.data-show);
+    console.log(userRef.child(this.data-show));
     // ------ > add code for removal from firebase here
-    userRef.child(this).remove();
+    userRef.child(this.data-show).remove();
 
   }); 
 
@@ -262,9 +266,9 @@ function populateShows(show) {
       //push show to shows db
       userRef = "users/" + uid + "/shows/";
       var urlSub = response.Title + "/showURL"
-      database.ref(userRef).push({
-        "showName": response.Title,
-        urlSub: showURL,
+      database.ref(userRef).set({
+        showName: response.Title,
+        [urlSub]: showURL,
        });
 
       // add the title to showName array and increment the showCounter for looping

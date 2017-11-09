@@ -165,18 +165,17 @@ $(document).ready(function(){
 
   // delete button
   $(document).on("click", ".delete-button", function(){
+    //remove from html
     $(this).parent().remove();
-
+    
+    // Remove from firebase
     var tempShow = this.value.replace(/\s+/g, '');
-
-    console.log(tempShow);
-    console.log(database.ref(userRef));
-    // ------ > add code for removal from firebase here
     database.ref(userRef).child(tempShow).remove();
-
+    
+    // Remove from showNames array and decrement showCounter
     for (i = 0; i < showCounter; i++) {
       if (this.value === showNames[i]) {
-        array.splice(index, i);
+        array.splice(i, 1);
         showCounter--;
       }
     }

@@ -91,12 +91,14 @@ $(document).ready(function(){
   window.addEventListener('load', initApp);
 
 // -------> END FIREBASE LOGIN CODE <-------
-
+  
   user = sessionStorage.getItem("user");
-  ref = database.ref("users/" + user + "/shows/");
+  userRef = "users/" + uid + "/shows/";
+  // var showName = response.Title.replace(/\s+/g, '');
+  // var showRef = userRef + showName;
 
   // get shows from db
-  ref.on("child_added", function(snapshot) {
+  database.ref(userRef).on("child_added", function(snapshot) {
 
     var showData = snapshot.val();
     var currentURL = showData.showURL;
@@ -118,7 +120,7 @@ $(document).ready(function(){
       //new div for show
       var div = $("<div>");
       div.addClass("pull-left show-div");
-      div.attr("data-show", response.Title);
+      div.attr("value", response.Title);
 
       // poster for the show
       var poster = $("<img>");
@@ -130,7 +132,7 @@ $(document).ready(function(){
       //del button 
       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
       deleteButton.html("X");
-      deleteButton.attr("data-show", response.Title);
+      deleteButton.attr("value", response.Title);
 
       //title 
       var title = $("<h3>");
@@ -165,10 +167,12 @@ $(document).ready(function(){
   $(document).on("click", ".delete-button", function(){
     $(this).parent().remove();
 
-    console.log(this.data-show);
-    console.log(userRef.child(this.data-show));
+    var tempShow = this.value.replace(/\s+/g, '');
+
+    console.log(tempShow);
+    console.log(database.ref(userRef));
     // ------ > add code for removal from firebase here
-    userRef.child(this.data-show).remove();
+    database.ref(userRef).child(tempShow).remove();
 
   }); 
 
@@ -238,7 +242,7 @@ function populateShows(show) {
       //new div for show
       var div = $("<div>");
       div.addClass("pull-left show-div");
-      div.attr("data-show", response.Title);
+      div.attr("value", response.Title);
 
       // poster for the show
       var poster = $("<img>");
@@ -250,7 +254,7 @@ function populateShows(show) {
       //del button 
       var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
       deleteButton.html("X");
-      deleteButton.attr("data-show", response.Title);
+      deleteButton.attr("value", response.Title);
 
       //title 
       var title = $("<h3>");

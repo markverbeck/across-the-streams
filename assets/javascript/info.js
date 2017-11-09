@@ -88,9 +88,8 @@ var displayShowTimes = function(){
       console.log(time);
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");
-      $("#show-times").append("<p>Time: " + time + " EST</p>");
+      $("#show-times").append("<p>Time: " + time + " EST (" + response.status + ")</p>");
       $("#show-times").append("<p>Network: " + response.network.name + "</p>");
-      $("#show-times").append("<p>Status: " + response.status + "</p>");
     });
 
 var convert = function (input) {

@@ -19,8 +19,7 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-var uid = firebase.auth().currentUser.uid;
-console.log(uid);
+var uid;
 
 // firebase ref variables
 var userRef;

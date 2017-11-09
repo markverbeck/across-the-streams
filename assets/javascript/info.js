@@ -94,11 +94,11 @@ var displayShowTimes = function(){
       }
       
       var network;
-      if(response.network === null) {
+      if(response.network.name === null) {
         network = response.webChannel.name;
       }
       else {
-        network = response.network;
+        network = response.network.name;
       }
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");

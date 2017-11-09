@@ -101,6 +101,9 @@ $(document).ready(function(){
   database.ref(userRef).on("value", function(snapshot) {
 
     var showData = snapshot.val();
+
+    console.log(showData);
+
     var currentURL = showData.showURL;
 
     console.log(currentURL);

@@ -91,3 +91,7 @@ a:hover {
 #user-signed-in li {
 	display: inline;
 }
+
+#name li {
+	display: inline;
+}

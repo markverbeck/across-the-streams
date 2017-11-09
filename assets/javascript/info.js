@@ -95,7 +95,7 @@ var displayShowTimes = function(){
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");
       $("#show-times").append("<p>Time: " + time + " EST (" + response.status + ")</p>");
-      $("#show-times").append("<p>Network: " + response.network.name + "</p>");
+      $("#show-times").append("<p>Network: " + response.network.name + response.webChannel.name + "</p>");
     });
 
 var convert = function (input) {

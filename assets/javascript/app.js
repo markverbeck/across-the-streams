@@ -410,7 +410,7 @@ $(document).ready(function(){
       }); // end ajax
     }); // end child added function
 
-  }, 4000); // end timeout
+  }, 2000); // end timeout
 
 });  // end of document.ready!
 

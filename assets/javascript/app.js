@@ -130,7 +130,7 @@ $(document).ready(function(){
     console.log(uid);
 
       //save user uid to session storage
-    saveUserSession(uid);
+    // saveUserSession(uid);
 
     userRef = "users/" + uid + "/shows";
     

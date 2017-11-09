@@ -346,11 +346,11 @@ $(document).ready(function(){
 
   // }); // end of window.load
 
-  uid = firebase.auth().currentUser.uid;
-  console.log(uid);
-
   setTimeout(function() {
     userRef = "users/" + uid + "/shows";
+
+    uid = firebase.auth().currentUser.uid;
+    console.log(uid);
     
     // get shows from db
     database.ref(userRef).on("child_added", function(snapshot) {

@@ -76,7 +76,6 @@ $(document).ready(function(){
     $("#loaded").removeClass();
     $("#loaded").addClass("show");
     user ? handleSignedInUser(user) : handleSignedOutUser();
-    uid = user.uid;
   });
 
   // Initializes the FirebaseUI app.
@@ -131,7 +130,6 @@ $(document).ready(function(){
   saveUserSession(uid);
 
 });  // end of document.ready!
-
 
 //save show name and apiurl to local
 function saveShowLocalInfo(apiURL, showName) {
@@ -237,9 +235,10 @@ function populateNewShows(show) {
   });
 }
 
-// pull shows from DB
+// pull shows from db
 function populateOldShows() {
 
+  uid = firebase.auth().currentUser.uid;
   userRef = "users/" + uid + "/shows/";
   
   // get shows from db

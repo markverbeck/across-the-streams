@@ -80,6 +80,10 @@ a:hover {
 	border-color: #004053;
 }
 
-#name {
-	display: inline-block;
+#loaded li{
+	display: inline;
+}
+
+#loading li {
+	display: inline;
 }

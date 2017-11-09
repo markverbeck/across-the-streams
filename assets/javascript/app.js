@@ -19,7 +19,7 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-var uid; // = "test-user";
+// var uid; // = "test-user";
 
 // firebase ref variables
 var userRef;
@@ -200,8 +200,6 @@ function saveShowLocalInfo(apiURL, showName) {
 //save user name to sessionStorage
 function saveUserSession(userName) {
   sessionStorage.setItem("user", userName);
-
-  userRef = "users/" + userName + "/shows/";
 
   console.log(sessionStorage);
 }

@@ -84,7 +84,13 @@ var displayShowTimes = function(){
       $("show-times").empty();
       console.log(response);
       
-      var time = convert(response.schedule.time);
+      var time;
+      if(response.schedule.time === "") {
+        time = "N/A";
+      } 
+      else {
+        time = convert(response.schedule.time);
+      }
       console.log(time);
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");

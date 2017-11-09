@@ -93,19 +93,17 @@ $(document).ready(function(){
 // -------> END FIREBASE LOGIN CODE <-------
   
   user = sessionStorage.getItem("user");
-  userRef = "users/" + uid + "/shows/";
-
-  console.log(database.ref(userRef));
   
   // get shows from db
   database.ref(userRef).on("value", function(snapshot) {
 
-    var showData = snapshot.val();
+    userRef = "users/" + uid + "/shows/";
+    console.log(database.ref(userRef));
 
+    var showData = snapshot.val();
     console.log(showData);
 
     var currentURL = showData.showURL;
-
     console.log(currentURL);
 
     $.ajax({

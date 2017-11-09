@@ -102,8 +102,6 @@ $(document).ready(function(){
   window.addEventListener('load', initApp);
 
 // -------> END FIREBASE LOGIN CODE <-------
-  
-  // user = sessionStorage.getItem("user");
 
   // submit button
   $("#submit").on("click", function(){
@@ -220,8 +218,6 @@ $(document).ready(function(){
       $("#recommendedServices").append(imageLink);
     }
     
-
-    
       $("#listItem").val("");
     });
   
@@ -233,8 +229,6 @@ $(document).ready(function(){
         method: "GET"
     }).done(function(response){
        
-
-
        if(response.network.name === "CBS"){
         cbs ++;
       }else if (response.network.name === "NBC"){
@@ -247,7 +241,6 @@ $(document).ready(function(){
         cw ++;
       }else{};
       
-
       console.log(response.network.name);
     });
   }
@@ -259,8 +252,6 @@ $(document).ready(function(){
         method: "GET"
     }).done(function(response){
        
-
-
        if(response.webChannel.name === "Netflix"){
         netflix ++;
       }else if (response.webChannel.name === "Hulu"){
@@ -275,77 +266,7 @@ $(document).ready(function(){
 
 // MARK"S NEW CODE ENDS HERE!!
 
-    // window load for pulling data from firebase db - uid not populated in document.ready
-  // $(window).on("load", function() {
-    
-  //   uid = firebase.auth().currentUser.uid;
-  //   console.log(uid);
-
-  //   setTimeout(function() {
-  //     userRef = "users/" + uid + "/shows";
-      
-  //     // get shows from db
-  //     database.ref(userRef).on("child_added", function(snapshot) {
-
-  //       console.log(database.ref(userRef));
-
-  //       var showData = snapshot.val();
-  //       console.log(showData);
-
-  //       var currentURL = showData.showURL;
-  //       console.log(currentURL);
-
-  //       $.ajax({
-  //       url: currentURL,
-  //       method: "GET"
-  //       }).done(function(response) {
-          
-  //         console.log(response.Poster);
-  //         console.log(response.Title);
-
-  //         // add href to poster/title
-  //         var a = $("<a>");
-  //         a.attr("href", "info.html?name="+response.Title);
-
-  //         //new div for show
-  //         var div = $("<div>");
-  //         div.addClass("pull-left show-div");
-  //         div.attr("value", response.Title);
-
-  //         // poster for the show
-  //         var poster = $("<img>");
-  //         poster.attr("href", "/info.html");
-  //         poster.addClass("thumbnail");
-  //         poster.attr("src", response.Poster);
-  //         poster.attr("width", "150");
-
-  //         //del button 
-  //         var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-  //         deleteButton.html("X");
-  //         deleteButton.attr("value", response.Title);
-
-  //         //title 
-  //         var title = $("<h3>");
-  //         title.addClass("showLink")
-  //         title.text(response.Title);
-
-  //         //append img and delete button to div
-  //         div.append(deleteButton);
-  //         div.append(a);
-  //         a.append(poster);
-  //         a.append(title);
-  //         $("#list").append(div);
-
-  //         // add shows to array
-  //         showNames[showCounter] = response.Title;
-  //         showCounter++; 
-  //       }); // end ajax
-  //     }); // end child added function
-
-  //   }, 4000); // end timeout
-
-  // }); // end of window.load
-
+  // timeout for firebause auth info to get back to us
   setTimeout(function() {
     userRef = "users/" + uid + "/shows";
 
@@ -414,21 +335,6 @@ $(document).ready(function(){
 
 });  // end of document.ready!
 
-//save show name and apiurl to local
-// function saveShowLocalInfo(apiURL, showName) {
-//   localStorage.setItem("name", showName);
-//   localStorage.setItem("url", apiURL);
-
-//   console.log(localStorage);
-// }
-
-// //save user name to sessionStorage
-// function saveUserSession(userName) {
-//   sessionStorage.setItem("user", userName);
-
-//   console.log(sessionStorage);
-// }
-
 // populate show searched in list ID after search
 function populateShows(show) {
   var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
@@ -467,38 +373,6 @@ function populateShows(show) {
     
     // add to library flag is true?... then do this   
     if (addToLibrary) {
-      // add href to poster/title
-      // var a = $("<a>");
-      // a.attr("href", "info.html?name="+response.Title);
-
-      // //new div for show
-      // var div = $("<div>");
-      // div.addClass("pull-left show-div");
-      // div.attr("value", response.Title);
-
-      // // poster for the show
-      // var poster = $("<img>");
-      // poster.attr("href", "/info.html");
-      // poster.addClass("thumbnail");
-      // poster.attr("src", response.Poster);
-      // poster.attr("width", "150");
-
-      // //del button 
-      // var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-      // deleteButton.html("X");
-      // deleteButton.attr("value", response.Title);
-
-      // //title 
-      // var title = $("<h3>");
-      // title.addClass("showLink")
-      // title.text(response.Title);
-
-      // //append img and delete button to div
-      // div.append(deleteButton);
-      // div.append(a);
-      // a.append(poster);
-      // a.append(title);
-      // $("#list").append(div);
 
       //push show to shows db
       userRef = "users/" + uid + "/shows/";

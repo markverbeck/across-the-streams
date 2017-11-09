@@ -78,6 +78,11 @@ a:hover {
 .login {
 	background-color: #004053;
 	border-color: #004053;
+	color: #9d9d9d;
+}
+
+.login:hover {
+	color: white;
 }
 
 #loaded li{

@@ -132,7 +132,7 @@ $(document).ready(function(){
     userRef = "users/" + uid + "/shows";
     
     // get shows from db
-    database.ref(userRef).on("value", function(snapshot) {
+    database.ref(userRef).on("child_added", function(snapshot) {
 
       console.log(database.ref(userRef));
 

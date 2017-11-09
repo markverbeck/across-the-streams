@@ -102,7 +102,7 @@ var displayShowTimes = function(){
       }
 
       $("#show-times").html("<p>Days Scheduled: " + response.schedule.days + "</p>");
-      $("#show-times").append("<p>Time: " + time + " (" + response.schedule.status + ")</p>");
+      $("#show-times").append("<p>Time: " + time + " (" + response.status + ")</p>");
       $("#show-times").append("<p>Network: " + network + "</p>");
     });
 

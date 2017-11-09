@@ -124,7 +124,11 @@ $(document).ready(function(){
     }
   }); 
 
-  //save user uid to session storage
+});  // end of document.ready!
+
+// window load for pulling data from firebase db - uid not populated in document.ready
+$(window).load(function() {
+    //save user uid to session storage
   saveUserSession(uid);
 
   userRef = "users/" + uid + "/shows/";
@@ -186,8 +190,7 @@ $(document).ready(function(){
     });
   });
 
-});  // end of document.ready!
-
+}); // end of window.ready
 
 //save show name and apiurl to local
 function saveShowLocalInfo(apiURL, showName) {

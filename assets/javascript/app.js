@@ -266,10 +266,11 @@ function populateShows(show) {
 
       //push show to shows db
       userRef = "users/" + uid + "/shows/";
-      var showRef = userRef + response.Title
-      var urlRef = showRef + showURL
+      var showName = response.Title.replace(/\s+/g, '');
+      var showRef = userRef + showName;
+      var urlRef = showRef + showURL;
       
-      database.ref(userRef).set({
+      database.ref(showRef).set({
         showName: response.Title,
         showURL: showURL,
        });

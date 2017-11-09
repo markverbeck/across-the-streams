@@ -20,7 +20,15 @@ var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
 var uid; // = "test-user";
-
+// networks
+var netflix = 0;
+var hulu = 0;
+var amazon = 0;
+var cbs = 0;
+var nbc = 0;
+var abc = 0;
+var fox = 0;
+var cw = 0;
 // firebase ref variables
 var userRef;
 var showRef;
@@ -157,9 +165,64 @@ $(document).ready(function(){
     //show poster as clickable item in library (#list)
     console.log(listName);
     populateShows(listName);
+    networkCall();
+    webChannelCall();
 
-    $("#listItem").val("");
-  });
+    
+
+    
+      $("#listItem").val("");
+    });
+  
+  var networkCall = function(){
+    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+
+    $.ajax({
+      url: api,
+        method: "GET"
+    }).done(function(response){
+       
+
+
+       if(response.network.name === "CBS"){
+        cbs ++;
+      }else if (response.network.name === "NBC"){
+        nbc ++;
+      }else if (response.network.name === "ABC"){
+        abc ++;
+      }else if (response.network.name === "FOX"){
+        fox ++;
+      }else if (response.network.name === "The CW"){
+        cw ++;
+      }else{};
+      
+
+      console.log(response.network.name);
+    });
+  }
+
+  var webChannelCall = function(){
+    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+    $.ajax({
+      url: api,
+        method: "GET"
+    }).done(function(response){
+       
+
+
+       if(response.webChannel.name === "Netflix"){
+        netflix ++;
+      }else if (response.webChannel.name === "Hulu"){
+        hulu ++;
+      }else if (response.webChannel.name === "Amazon"){
+        amazon ++;
+      }
+
+      console.log(response.webChannel.name);
+    });
+  }
+
+
 
   // delete button
   $(document).on("click", ".delete-button", function(){

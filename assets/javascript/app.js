@@ -127,7 +127,7 @@ $(document).ready(function(){
 });  // end of document.ready!
 
 // window load for pulling data from firebase db - uid not populated in document.ready
-$(window).load(function() {
+$(window).on("load", function() {
     //save user uid to session storage
   saveUserSession(uid);
 

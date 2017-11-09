@@ -94,8 +94,6 @@ $(document).ready(function(){
   
   user = sessionStorage.getItem("user");
   userRef = "users/" + uid + "/shows/";
-  // var showName = response.Title.replace(/\s+/g, '');
-  // var showRef = userRef + showName;
 
   console.log(database.ref(userRef));
   
@@ -175,6 +173,13 @@ $(document).ready(function(){
     console.log(database.ref(userRef));
     // ------ > add code for removal from firebase here
     database.ref(userRef).child(tempShow).remove();
+
+    for (i = 0; i < showCounter; i++) {
+      if (this.value === showNames[i]) {
+        array.splice(index, i);
+        showCounter--;
+      }
+    }
 
   }); 
 

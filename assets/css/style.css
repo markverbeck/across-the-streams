@@ -87,3 +87,7 @@ a:hover {
 #loading li {
 	display: inline;
 }
+
+#user-signed-in li {
+	display: inline;
+}

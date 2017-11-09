@@ -124,73 +124,73 @@ $(document).ready(function(){
     }
   }); 
 
-});  // end of document.ready!
+    // window load for pulling data from firebase db - uid not populated in document.ready
+  $(window).on("load", function() {
+      //save user uid to session storage
+    saveUserSession(uid);
 
-// window load for pulling data from firebase db - uid not populated in document.ready
-$(window).on("load", function() {
-    //save user uid to session storage
-  saveUserSession(uid);
+    userRef = "users/" + uid + "/shows";
+    
+    // get shows from db
+    database.ref(userRef).on("value", function(snapshot) {
 
-  userRef = "users/" + uid + "/shows/";
-  
-  // get shows from db
-  database.ref(userRef).on("value", function(snapshot) {
+      console.log(database.ref(userRef));
 
-    console.log(database.ref(userRef));
+      var showData = snapshot.val();
+      console.log(showData);
 
-    var showData = snapshot.val();
-    console.log(showData);
+      var currentURL = showData.showURL;
+      console.log(currentURL);
 
-    var currentURL = showData.showURL;
-    console.log(currentURL);
+      $.ajax({
+      url: currentURL,
+      method: "GET"
+      }).done(function(response) {
+        
+        console.log(response.Poster);
+        console.log(response.Title);
 
-    $.ajax({
-    url: currentURL,
-    method: "GET"
-    }).done(function(response) {
-      
-      console.log(response.Poster);
-      console.log(response.Title);
+        // add href to poster/title
+        var a = $("<a>");
+        a.attr("href", "info.html");
 
-      // add href to poster/title
-      var a = $("<a>");
-      a.attr("href", "info.html");
+        //new div for show
+        var div = $("<div>");
+        div.addClass("pull-left show-div");
+        div.attr("value", response.Title);
 
-      //new div for show
-      var div = $("<div>");
-      div.addClass("pull-left show-div");
-      div.attr("value", response.Title);
+        // poster for the show
+        var poster = $("<img>");
+        poster.attr("href", "/info.html");
+        poster.addClass("thumbnail");
+        poster.attr("src", response.Poster);
+        poster.attr("width", "150");
 
-      // poster for the show
-      var poster = $("<img>");
-      poster.attr("href", "/info.html");
-      poster.addClass("thumbnail");
-      poster.attr("src", response.Poster);
-      poster.attr("width", "150");
+        //del button 
+        var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+        deleteButton.html("X");
+        deleteButton.attr("value", response.Title);
 
-      //del button 
-      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-      deleteButton.html("X");
-      deleteButton.attr("value", response.Title);
+        //title 
+        var title = $("<h3>");
+        title.text(response.Title);
 
-      //title 
-      var title = $("<h3>");
-      title.text(response.Title);
+        //append img and delete button to div
+        div.append(deleteButton);
+        div.append(a);
+        a.append(poster);
+        a.append(title);
+        $("#list").append(div);
 
-      //append img and delete button to div
-      div.append(deleteButton);
-      div.append(a);
-      a.append(poster);
-      a.append(title);
-      $("#list").append(div);
-
-      // add shows to array
-      showNames[showCounter] = response.Title;
-      showCounter++; 
+        // add shows to array
+        showNames[showCounter] = response.Title;
+        showCounter++; 
+      });
     });
-  });
 
-}); // end of window.ready
+  }); // end of window.load
+
+});  // end of document.ready!
 
 //save show name and apiurl to local
 function saveShowLocalInfo(apiURL, showName) {

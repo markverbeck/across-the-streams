@@ -66,3 +66,32 @@ body {
 	font-size: 20px;
 	text-shadow: 1px 1px black;
 }
+
+a {
+	color: #9d9d9d;
+}
+
+a:hover {
+	color: white;
+}
+
+.login {
+	background-color: #004053;
+	border-color: #004053;
+}
+
+#loaded li{
+	display: inline;
+}
+
+#loading li {
+	display: inline;
+}
+
+#user-signed-in li {
+	display: inline;
+}
+
+#name li {
+	display: inline;
+}

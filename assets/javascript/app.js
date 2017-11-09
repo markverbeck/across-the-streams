@@ -468,37 +468,37 @@ function populateShows(show) {
     // add to library flag is true?... then do this   
     if (addToLibrary) {
       // add href to poster/title
-      var a = $("<a>");
-      a.attr("href", "info.html?name="+response.Title);
+      // var a = $("<a>");
+      // a.attr("href", "info.html?name="+response.Title);
 
-      //new div for show
-      var div = $("<div>");
-      div.addClass("pull-left show-div");
-      div.attr("value", response.Title);
+      // //new div for show
+      // var div = $("<div>");
+      // div.addClass("pull-left show-div");
+      // div.attr("value", response.Title);
 
-      // poster for the show
-      var poster = $("<img>");
-      poster.attr("href", "/info.html");
-      poster.addClass("thumbnail");
-      poster.attr("src", response.Poster);
-      poster.attr("width", "150");
+      // // poster for the show
+      // var poster = $("<img>");
+      // poster.attr("href", "/info.html");
+      // poster.addClass("thumbnail");
+      // poster.attr("src", response.Poster);
+      // poster.attr("width", "150");
 
-      //del button 
-      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-      deleteButton.html("X");
-      deleteButton.attr("value", response.Title);
+      // //del button 
+      // var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      // deleteButton.html("X");
+      // deleteButton.attr("value", response.Title);
 
-      //title 
-      var title = $("<h3>");
-      title.addClass("showLink")
-      title.text(response.Title);
+      // //title 
+      // var title = $("<h3>");
+      // title.addClass("showLink")
+      // title.text(response.Title);
 
-      //append img and delete button to div
-      div.append(deleteButton);
-      div.append(a);
-      a.append(poster);
-      a.append(title);
-      $("#list").append(div);
+      // //append img and delete button to div
+      // div.append(deleteButton);
+      // div.append(a);
+      // a.append(poster);
+      // a.append(title);
+      // $("#list").append(div);
 
       //push show to shows db
       userRef = "users/" + uid + "/shows/";

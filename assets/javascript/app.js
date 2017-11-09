@@ -130,68 +130,68 @@ $(document).ready(function(){
     uid = firebase.auth().currentUser.uid;
     console.log(uid);
 
-      //save user uid to session storage
-    // saveUserSession(uid);
+    setTimeout(function() {
+      userRef = "users/" + uid + "/shows";
+      
+      // get shows from db
+      database.ref(userRef).on("child_added", function(snapshot) {
 
-    userRef = "users/" + uid + "/shows";
-    
-    // get shows from db
-    database.ref(userRef).on("child_added", function(snapshot) {
+        console.log(database.ref(userRef));
 
-      console.log(database.ref(userRef));
+        var showData = snapshot.val();
+        console.log(showData);
 
-      var showData = snapshot.val();
-      console.log(showData);
+        var currentURL = showData.showURL;
+        console.log(currentURL);
 
-      var currentURL = showData.showURL;
-      console.log(currentURL);
+        $.ajax({
+        url: currentURL,
+        method: "GET"
+        }).done(function(response) {
+          
+          console.log(response.Poster);
+          console.log(response.Title);
 
-      $.ajax({
-      url: currentURL,
-      method: "GET"
-      }).done(function(response) {
-        
-        console.log(response.Poster);
-        console.log(response.Title);
+          // add href to poster/title
+          var a = $("<a>");
+          a.attr("href", "info.html?name="+response.Title);
 
-        // add href to poster/title
-        var a = $("<a>");
-        a.attr("href", "info.html?name="+response.Title);
+          //new div for show
+          var div = $("<div>");
+          div.addClass("pull-left show-div");
+          div.attr("value", response.Title);
 
-        //new div for show
-        var div = $("<div>");
-        div.addClass("pull-left show-div");
-        div.attr("value", response.Title);
+          // poster for the show
+          var poster = $("<img>");
+          poster.attr("href", "/info.html");
+          poster.addClass("thumbnail");
+          poster.attr("src", response.Poster);
+          poster.attr("width", "150");
 
-        // poster for the show
-        var poster = $("<img>");
-        poster.attr("href", "/info.html");
-        poster.addClass("thumbnail");
-        poster.attr("src", response.Poster);
-        poster.attr("width", "150");
+          //del button 
+          var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+          deleteButton.html("X");
+          deleteButton.attr("value", response.Title);
 
-        //del button 
-        var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-        deleteButton.html("X");
-        deleteButton.attr("value", response.Title);
+          //title 
+          var title = $("<h3>");
+          title.addClass("showLink")
+          title.text(response.Title);
 
-        //title 
-        var title = $("<h3>");
-        title.addClass("showLink")
-        title.text(response.Title);
+          //append img and delete button to div
+          div.append(deleteButton);
+          div.append(a);
+          a.append(poster);
+          a.append(title);
+          $("#list").append(div);
 
-        //append img and delete button to div
-        div.append(deleteButton);
-        div.append(a);
-        a.append(poster);
-        a.append(title);
-        $("#list").append(div);
+          // add shows to array
+          showNames[showCounter] = response.Title;
+          showCounter++; 
+        }); // end ajax
+      }); // end child added function
 
-        // add shows to array
-        showNames[showCounter] = response.Title;
-        showCounter++; 
-      });
-    });
+    }, 4000); // end timeout
 
   }); // end of window.load
 
@@ -250,38 +250,38 @@ function populateShows(show) {
     
     // add to library flag is true?... then do this   
     if (addToLibrary) {
-      // // add href to poster/title
-      // var a = $("<a>");
-      // a.attr("href", "info.html?name="+response.Title);
+      // add href to poster/title
+      var a = $("<a>");
+      a.attr("href", "info.html?name="+response.Title);
 
-      // //new div for show
-      // var div = $("<div>");
-      // div.addClass("pull-left show-div");
-      // div.attr("value", response.Title);
+      //new div for show
+      var div = $("<div>");
+      div.addClass("pull-left show-div");
+      div.attr("value", response.Title);
 
-      // // poster for the show
-      // var poster = $("<img>");
-      // poster.attr("href", "/info.html");
-      // poster.addClass("thumbnail");
-      // poster.attr("src", response.Poster);
-      // poster.attr("width", "150");
+      // poster for the show
+      var poster = $("<img>");
+      poster.attr("href", "/info.html");
+      poster.addClass("thumbnail");
+      poster.attr("src", response.Poster);
+      poster.attr("width", "150");
 
-      // //del button 
-      // var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-      // deleteButton.html("X");
-      // deleteButton.attr("value", response.Title);
+      //del button 
+      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      deleteButton.html("X");
+      deleteButton.attr("value", response.Title);
 
-      // //title 
-      // var title = $("<h3>");
-      // title.addClass("showLink")
-      // title.text(response.Title);
+      //title 
+      var title = $("<h3>");
+      title.addClass("showLink")
+      title.text(response.Title);
 
-      // //append img and delete button to div
-      // div.append(deleteButton);
-      // div.append(a);
-      // a.append(poster);
-      // a.append(title);
-      // $("#list").append(div);
+      //append img and delete button to div
+      div.append(deleteButton);
+      div.append(a);
+      a.append(poster);
+      a.append(title);
+      $("#list").append(div);
 
       //push show to shows db
       userRef = "users/" + uid + "/shows/";

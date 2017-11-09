@@ -93,11 +93,45 @@ $(document).ready(function(){
 // -------> END FIREBASE LOGIN CODE <-------
   
   user = sessionStorage.getItem("user");
+
+  // submit button
+  $("#submit").on("click", function(){
+    event.preventDefault();
+    listName = $("#listItem").val().trim();
+
+    //show poster as clickable item in library (#list)
+    console.log(listName);
+    populateShows(listName);
+
+    $("#listItem").val("");
+  });
+
+  // delete button
+  $(document).on("click", ".delete-button", function(){
+    //remove from html
+    $(this).parent().remove();
+    
+    // Remove from firebase
+    var tempShow = this.value.replace(/\s+/g, '');
+    database.ref(userRef).child(tempShow).remove();
+    
+    // Remove from showNames array and decrement showCounter
+    for (i = 0; i < showCounter; i++) {
+      if (this.value === showNames[i]) {
+        showNames.splice(i, 1);
+        showCounter--;
+      }
+    }
+  }); 
+
+  //save user uid to session storage
+  saveUserSession(uid);
+
+  userRef = "users/" + uid + "/shows/";
   
   // get shows from db
   database.ref(userRef).on("value", function(snapshot) {
 
-    userRef = "users/" + uid + "/shows/";
     console.log(database.ref(userRef));
 
     var showData = snapshot.val();
@@ -151,39 +185,6 @@ $(document).ready(function(){
       showCounter++; 
     });
   });
-
-  // submit button
-  $("#submit").on("click", function(){
-    event.preventDefault();
-    listName = $("#listItem").val().trim();
-
-    //show poster as clickable item in library (#list)
-    console.log(listName);
-    populateShows(listName);
-
-    $("#listItem").val("");
-  });
-
-  // delete button
-  $(document).on("click", ".delete-button", function(){
-    //remove from html
-    $(this).parent().remove();
-    
-    // Remove from firebase
-    var tempShow = this.value.replace(/\s+/g, '');
-    database.ref(userRef).child(tempShow).remove();
-    
-    // Remove from showNames array and decrement showCounter
-    for (i = 0; i < showCounter; i++) {
-      if (this.value === showNames[i]) {
-        showNames.splice(i, 1);
-        showCounter--;
-      }
-    }
-  }); 
-
-  //save user uid to session storage
-  saveUserSession(uid);
 
 });  // end of document.ready!
 

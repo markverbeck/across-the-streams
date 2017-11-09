@@ -97,6 +97,8 @@ $(document).ready(function(){
   // var showName = response.Title.replace(/\s+/g, '');
   // var showRef = userRef + showName;
 
+  console.log(database.ref(userRef));
+  
   // get shows from db
   database.ref(userRef).on("child_added", function(snapshot) {
 

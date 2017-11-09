@@ -19,7 +19,8 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-var uid; // = "test-user";
+var uid = firebase.auth().currentUser.uid;
+console.log(uid);
 
 // firebase ref variables
 var userRef;
@@ -126,6 +127,7 @@ $(document).ready(function(){
 
     // window load for pulling data from firebase db - uid not populated in document.ready
   $(window).on("load", function() {
+    
     uid = firebase.auth().currentUser.uid;
     console.log(uid);
 
@@ -185,38 +187,6 @@ $(document).ready(function(){
         a.append(poster);
         a.append(title);
         $("#list").append(div);
-
-        // // add href to poster/title
-        // var a = $("<a>");
-        // a.attr("href", "info.html");
-
-        // //new div for show
-        // var div = $("<div>");
-        // div.addClass("pull-left show-div");
-        // div.attr("value", response.Title);
-
-        // // poster for the show
-        // var poster = $("<img>");
-        // poster.attr("href", "/info.html");
-        // poster.addClass("thumbnail");
-        // poster.attr("src", response.Poster);
-        // poster.attr("width", "150");
-
-        // //del button 
-        // var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-        // deleteButton.html("X");
-        // deleteButton.attr("value", response.Title);
-
-        // //title 
-        // var title = $("<h3>");
-        // title.text(response.Title);
-
-        // //append img and delete button to div
-        // div.append(deleteButton);
-        // div.append(a);
-        // a.append(poster);
-        // a.append(title);
-        // $("#list").append(div);
 
         // add shows to array
         showNames[showCounter] = response.Title;

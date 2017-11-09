@@ -201,6 +201,8 @@ function saveShowLocalInfo(apiURL, showName) {
 function saveUserSession(userName) {
   sessionStorage.setItem("user", userName);
 
+  userRef = "users/" + userName + "/shows/";
+
   console.log(sessionStorage);
 }
 

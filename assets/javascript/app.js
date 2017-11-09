@@ -92,7 +92,7 @@ $(document).ready(function(){
 
 // -------> END FIREBASE LOGIN CODE <-------
   
-  user = sessionStorage.getItem("user");
+  // user = sessionStorage.getItem("user");
 
   // submit button
   $("#submit").on("click", function(){
@@ -229,19 +229,19 @@ $(document).ready(function(){
 });  // end of document.ready!
 
 //save show name and apiurl to local
-function saveShowLocalInfo(apiURL, showName) {
-  localStorage.setItem("name", showName);
-  localStorage.setItem("url", apiURL);
+// function saveShowLocalInfo(apiURL, showName) {
+//   localStorage.setItem("name", showName);
+//   localStorage.setItem("url", apiURL);
 
-  console.log(localStorage);
-}
+//   console.log(localStorage);
+// }
 
-//save user name to sessionStorage
-function saveUserSession(userName) {
-  sessionStorage.setItem("user", userName);
+// //save user name to sessionStorage
+// function saveUserSession(userName) {
+//   sessionStorage.setItem("user", userName);
 
-  console.log(sessionStorage);
-}
+//   console.log(sessionStorage);
+// }
 
 // populate show searched in list ID after search
 function populateShows(show) {

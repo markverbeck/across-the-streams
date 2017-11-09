@@ -266,10 +266,12 @@ function populateShows(show) {
 
       //push show to shows db
       userRef = "users/" + uid + "/shows/";
-      var urlSub = response.Title + "/showURL"
+      var showRef = userRef + response.Title
+      var urlRef = showRef + showURL
+      
       database.ref(userRef).set({
         showName: response.Title,
-        [urlSub]: showURL,
+        showURL: showURL,
        });
 
       // add the title to showName array and increment the showCounter for looping

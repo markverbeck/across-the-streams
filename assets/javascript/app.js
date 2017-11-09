@@ -175,7 +175,7 @@ $(document).ready(function(){
     // Remove from showNames array and decrement showCounter
     for (i = 0; i < showCounter; i++) {
       if (this.value === showNames[i]) {
-        array.splice(i, 1);
+        showNames.splice(i, 1);
         showCounter--;
       }
     }

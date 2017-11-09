@@ -79,3 +79,7 @@ a:hover {
 	background-color: #004053;
 	border-color: #004053;
 }
+
+#name {
+	display: inline-block;
+}

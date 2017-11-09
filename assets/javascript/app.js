@@ -95,6 +95,8 @@ $(document).ready(function(){
   
   user = sessionStorage.getItem("user");
 
+  populateOldShows();
+
   // submit button
   $("#submit").on("click", function(){
     event.preventDefault();
@@ -102,7 +104,7 @@ $(document).ready(function(){
 
     //show poster as clickable item in library (#list)
     console.log(listName);
-    populateShows(listName);
+    populateNewShows(listName);
 
     $("#listItem").val("");
   });
@@ -128,65 +130,6 @@ $(document).ready(function(){
   //save user uid to session storage
   saveUserSession(uid);
 
-  userRef = "users/" + uid + "/shows/";
-  
-  // get shows from db
-  database.ref(userRef).on("value", function(snapshot) {
-
-    console.log(database.ref(userRef));
-
-    var showData = snapshot.val();
-    console.log(showData);
-
-    var currentURL = showData.showURL;
-    console.log(currentURL);
-
-    $.ajax({
-    url: currentURL,
-    method: "GET"
-    }).done(function(response) {
-      
-      console.log(response.Poster);
-      console.log(response.Title);
-
-      // add href to poster/title
-      var a = $("<a>");
-      a.attr("href", "info.html");
-
-      //new div for show
-      var div = $("<div>");
-      div.addClass("pull-left show-div");
-      div.attr("value", response.Title);
-
-      // poster for the show
-      var poster = $("<img>");
-      poster.attr("href", "/info.html");
-      poster.addClass("thumbnail");
-      poster.attr("src", response.Poster);
-      poster.attr("width", "150");
-
-      //del button 
-      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
-      deleteButton.html("X");
-      deleteButton.attr("value", response.Title);
-
-      //title 
-      var title = $("<h3>");
-      title.text(response.Title);
-
-      //append img and delete button to div
-      div.append(deleteButton);
-      div.append(a);
-      a.append(poster);
-      a.append(title);
-      $("#list").append(div);
-
-      // add shows to array
-      showNames[showCounter] = response.Title;
-      showCounter++; 
-    });
-  });
-
 });  // end of document.ready!
 
 
@@ -206,7 +149,7 @@ function saveUserSession(userName) {
 }
 
 // populate show searched in list ID after search
-function populateShows(show) {
+function populateNewShows(show) {
   var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
   console.log(showURL);
 
@@ -291,5 +234,68 @@ function populateShows(show) {
       showNames[showCounter] = response.Title;
       showCounter++;
     } 
+  });
+}
+
+// pull shows from DB
+function populateOldShows() {
+
+  userRef = "users/" + uid + "/shows/";
+  
+  // get shows from db
+  database.ref(userRef).on("value", function(snapshot) {
+
+    console.log(database.ref(userRef));
+
+    var showData = snapshot.val();
+    console.log(showData);
+
+    var currentURL = showData.showURL;
+    console.log(currentURL);
+
+    $.ajax({
+    url: currentURL,
+    method: "GET"
+    }).done(function(response) {
+      
+      console.log(response.Poster);
+      console.log(response.Title);
+
+      // add href to poster/title
+      var a = $("<a>");
+      a.attr("href", "info.html");
+
+      //new div for show
+      var div = $("<div>");
+      div.addClass("pull-left show-div");
+      div.attr("value", response.Title);
+
+      // poster for the show
+      var poster = $("<img>");
+      poster.attr("href", "/info.html");
+      poster.addClass("thumbnail");
+      poster.attr("src", response.Poster);
+      poster.attr("width", "150");
+
+      //del button 
+      var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+      deleteButton.html("X");
+      deleteButton.attr("value", response.Title);
+
+      //title 
+      var title = $("<h3>");
+      title.text(response.Title);
+
+      //append img and delete button to div
+      div.append(deleteButton);
+      div.append(a);
+      a.append(poster);
+      a.append(title);
+      $("#list").append(div);
+
+      // add shows to array
+      showNames[showCounter] = response.Title;
+      showCounter++; 
+    });
   });
 }

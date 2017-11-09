@@ -98,7 +98,7 @@ $(document).ready(function(){
   console.log(database.ref(userRef));
   
   // get shows from db
-  database.ref(userRef).on("child_added", function(snapshot) {
+  database.ref(userRef).on("value", function(snapshot) {
 
     var showData = snapshot.val();
     var currentURL = showData.showURL;
@@ -179,7 +179,6 @@ $(document).ready(function(){
         showCounter--;
       }
     }
-
   }); 
 
   //save user uid to session storage

@@ -19,7 +19,7 @@ var listName;
 var showNames = [];  // may not need this as soon as we get fb pulls working
 var showCounter = 0;
 var user;
-// var uid; // = "test-user";
+var uid; // = "test-user";
 
 // firebase ref variables
 var userRef;
@@ -76,6 +76,7 @@ $(document).ready(function(){
     $("#loaded").removeClass();
     $("#loaded").addClass("show");
     user ? handleSignedInUser(user) : handleSignedOutUser();
+    uid = user.uid;
   });
 
   // Initializes the FirebaseUI app.

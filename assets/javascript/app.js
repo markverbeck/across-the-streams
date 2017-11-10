@@ -204,7 +204,6 @@ $(document).ready(function(){
 
   }, 2000); // end timeout
 
-  pickStreamer();
 });  // end of document.ready!
 
 // populate show searched in list ID after search
@@ -312,7 +311,7 @@ var networkCall = function(title){
         }
       }
     }
-    if(response.network.name === "FX") {
+    if(response.network.name === "FX" || response.network.name === "FXX") {
       for (i = 0; i < streamService.length; i ++) {
         if (streamService[i].svc === "fx") {
           streamService[i].count++;
@@ -380,20 +379,22 @@ var pickStreamer = function(){
   console.log(streamService);
 
   // populate the top 3 streamers in recommendedServices div
-  for (i = 0; i < 3; i++) {
-    // image
-    netImage = $("<img>");
-    netImage.addClass("serviceImage");
-    netImage.attr("src", streamService[i].src);
-    netImage.attr("width", "200");
+  setTimeout(function() {
+    for (i = 0; i < 3; i++) {
+      // image
+      netImage = $("<img>");
+      netImage.addClass("serviceImage");
+      netImage.attr("src", streamService[i].src);
+      netImage.attr("width", "200");
 
-    // href
-    imageLink = $("<a>");
-    imageLink.attr("href", streamService[i].href);
-    imageLink.attr("target", "_blank");
-    imageLink.append(netImage);
+      // href
+      imageLink = $("<a>");
+      imageLink.attr("href", streamService[i].href);
+      imageLink.attr("target", "_blank");
+      imageLink.append(netImage);
 
-    // append it to recommendedServices
-    $("#recommendedServices").append(imageLink);
-  }
+      // append it to recommendedServices
+      $("#recommendedServices").append(imageLink);
+    }
+  }, 200);
 } // end of pickStreamer

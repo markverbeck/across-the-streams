@@ -16,21 +16,34 @@ var ref;
 
 // global variables
 var listName;
-var showNames = [];  // may not need this as soon as we get fb pulls working
+var showNames = []; 
 var showCounter = 0;
 var user;
-var uid;
-//networks
-var netflix = 0;
-var hulu = 0;
-var amazon = 0;
-var cbs = 0;
-var nbc = 0;
-var abc = 0;
-var fox = 0;
-var cw = 0;
+var uid // = "test-user";
+
+//network counters
+// var netflix = 0;
+// var hulu = 0;
+// var amazon = 0;
+// var cbs = 0;
+// var nbc = 0;
+// var abc = 0;
+// var fox = 0;
+// var cw = 0;
+
 var netImage;
 var imageLink;
+
+var streamService = [
+    { count: '0', svc: 'hulu', src: 'assets/images/hulu.png', href: 'https://www.hulu.com/welcome'},
+    { count: '0', svc: 'netflix', src: 'assets/images/netflix.png', href: 'https://www.netflix.com/' },
+    { count: '0', svc: 'amazon', src: 'assets/images/amazon.png', href: 'https://www.amazon.com/Prime-Video/b?node=2676882011' },
+    { count: '0', svc: 'fox', src: 'assets/images/fox.png', href: 'http://www.fox.com/' },
+    { count: '0', svc: 'abc', src: 'assets/images/abc.png', href: 'http://abc.go.com/' },
+    { count: '0', svc: 'cbs', src: 'assets/images/cbs.png', href: 'http://www.cbs.com/' },
+    { count: '0', svc: 'nbc', src: 'assets/images/nbc.png', href: 'http://www.nbc.com/' },
+    { count: '0', svc: 'cw', src: 'assets/images/cw.png', href: 'http://www.cwtv.com/' },
+];
 
 // firebase ref variables
 var userRef;
@@ -101,13 +114,12 @@ $(document).ready(function(){
 
 // -------> END FIREBASE LOGIN CODE <-------
 
-  // submit button
+  // // submit button
   $("#submit").on("click", function(){
     event.preventDefault();
     listName = $("#listItem").val().trim();
 
     //show poster as clickable item in library (#list)
-    console.log(listName);
     populateShows(listName);
 
     $("#listItem").val("");
@@ -129,166 +141,24 @@ $(document).ready(function(){
         showCounter--;
       }
     }
-  }); 
-
-// submit button.  MARK"S NEW CODE STARTS HERE!!!!!!
-  $("#submit").on("click", function(){
-    event.preventDefault();
-    listName = $("#listItem").val().trim();
-
-    //show poster as clickable item in library (#list)
-    console.log(listName);
-    populateShows(listName);
-    networkCall();
-    webChannelCall();
-
-    if(fox === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/fox.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "https://www.fox.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (cbs === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/cbs.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "http://www.cbs.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (nbc === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/nbc.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "https://www.nbc.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (cw === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/cw.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "http://www.cwtv.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (abc === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/abc.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "http://abc.go.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (netflix === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/netflix.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "https://www.netflix.com/");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (hulu === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/hulu.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "https://www.hulu.com/welcome?orig_referrer=https%3A%2F%2Fwww.google.com%2F");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }else if (amazon === 2){
-      netImage = $("<img>");
-      netImage.addClass("serviceImage");
-      netImage.attr("src", "assets/images/Amazon.png");
-      imageLink = $("<a>");
-      imageLink.attr("href", "https://www.amazon.com/gp/video/offers/ref=dvm_us_dl_sl_go_brw%7Cc_163705074697_m_PfLbcut2-dc_s__?ie=UTF8&gclid=EAIaIQobChMI55DphKey1wIVyIR-Ch2wogqkEAAYASAAEgIyQPD_BwE");
-      imageLink.attr("target", "_blank");
-      imageLink.append(netImage);
-      $("#recommendedServices").append(imageLink);
-    }
-    
-      $("#listItem").val("");
-    });
-  
-  var networkCall = function(){
-    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
-
-    $.ajax({
-      url: api,
-        method: "GET"
-    }).done(function(response){
-       
-       if(response.network.name === "CBS"){
-        cbs ++;
-      }else if (response.network.name === "NBC"){
-        nbc ++;
-      }else if (response.network.name === "ABC"){
-        abc ++;
-      }else if (response.network.name === "FOX"){
-        fox ++;
-      }else if (response.network.name === "The CW"){
-        cw ++;
-      }else{};
-      
-      console.log(response.network.name);
-    });
-  }
-
-  var webChannelCall = function(){
-    var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
-    $.ajax({
-      url: api,
-        method: "GET"
-    }).done(function(response){
-       
-       if(response.webChannel.name === "Netflix"){
-        netflix ++;
-      }else if (response.webChannel.name === "Hulu"){
-        hulu ++;
-      }else if (response.webChannel.name === "Amazon Prime"){
-        amazon ++;
-      }
-
-      console.log(response.webChannel.name);
-    });
-  }
-
-// MARK"S NEW CODE ENDS HERE!!
+  });
 
   // timeout for firebause auth info to get back to us
   setTimeout(function() {
     userRef = "users/" + uid + "/shows";
 
     uid = firebase.auth().currentUser.uid;
-    console.log(uid);
     
     // get shows from db
     database.ref(userRef).on("child_added", function(snapshot) {
 
-      console.log(database.ref(userRef));
-
       var showData = snapshot.val();
-      console.log(showData);
-
       var currentURL = showData.showURL;
-      console.log(currentURL);
 
       $.ajax({
       url: currentURL,
       method: "GET"
       }).done(function(response) {
-        
-        console.log(response.Poster);
-        console.log(response.Title);
 
         // add href to poster/title
         var a = $("<a>");
@@ -326,6 +196,12 @@ $(document).ready(function(){
         // add shows to array
         showNames[showCounter] = response.Title;
         showCounter++; 
+
+        // call network and web services code
+        networkCall();
+        webChannelCall();
+        pickStreamer();
+
       }); // end ajax
     }); // end child added function
 
@@ -336,26 +212,17 @@ $(document).ready(function(){
 // populate show searched in list ID after search
 function populateShows(show) {
   var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
-  console.log(showURL);
 
   $.ajax({
   url: showURL,
   method: "GET"
   }).done(function(response) {
-    
-    console.log(response.Poster);
-    console.log(response.Title);
-    console.log(showCounter);
 
     //should we add to library
     var addToLibrary = true;
 
-    console.log(addToLibrary);
-
     // loop through shows
     for (i = 0; i < showCounter; i++) {
-      console.log(showNames[i]);
-      console.log(response.Title);
       // check for title in showNames array
       if (showNames[i] === response.Title) {
         
@@ -388,4 +255,209 @@ function populateShows(show) {
       showCounter++;
     } 
   });
+}
+
+var networkCall = function(){
+  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+
+  $.ajax({
+    url: api,
+    method: "GET"
+  }).done(function(response){
+     
+    if(response.network.name === "CBS") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "cbs") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "NBC") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "nbc") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "ABC") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "abc") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "Fox") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "fox") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "The CW") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "cw") {
+          streamService[i].count++;
+        }
+      }
+    }
+    // }else if (response.network.name === "NBC"){
+    //   nbc++;
+    // }else if (response.network.name === "ABC"){
+    //   abc++;
+    // }else if (response.network.name === "FOX"){
+    //   fox++;
+    // }else if (response.network.name === "The CW"){
+    //   cw++;
+    // }
+    
+    console.log(response.network.name);
+    console.log(streamService);
+  });
+}
+
+var webChannelCall = function(){
+  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+  $.ajax({
+    url: api,
+    method: "GET"
+  }).done(function(response){
+     
+    if(response.webChannel.name === "Netflix") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "netflix") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.webChannel.name === "Hulu") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "hulu") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.webChannel.name === "Amazon Prime") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "amazon") {
+          streamService[i].count++;
+        }
+      }
+    }
+
+    // if(response.webChannel.name === "Netflix"){
+    //   netflix++;
+    // }else if (response.webChannel.name === "Hulu"){
+    //   hulu++;
+    // }else if (response.webChannel.name === "Amazon Prime"){
+    //   amazon++;
+    // }
+
+    console.log(response.webChannel.name);
+    console.log(streamService);
+  });
+}
+
+var pickStreamer = function(){
+
+  //sort the streamServie array
+  streamService.sort(function (x, y) {
+    var n = y.count - x.count;
+    if (n != 0) {
+        return n;
+    }
+
+    return y.svc - x.svc;
+    return y.src - x.src;
+    return y.href - x.href;
+  });
+
+  console.log(streamService);
+
+  // populate the top 3 streamers in recommendedServices div
+  for (i = 0; i < 3; i++) {
+    netImage = $("<img>");
+    netImage.addClass("serviceImage");
+    netImage.attr("src", streamService[i].src);
+
+    imageLink = $("<a>");
+    imageLink.attr("href", streamService[i].href);
+    imageLink.attr("target", "_blank");
+    imageLink.append(netImage);
+    
+    $("#recommendedServices").append(imageLink);
+  }
+
+  // if(fox === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/fox.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "https://www.fox.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (cbs === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/cbs.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "http://www.cbs.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (nbc === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/nbc.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "https://www.nbc.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (cw === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/cw.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "http://www.cwtv.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (abc === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/abc.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "http://abc.go.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (netflix === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/netflix.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "https://www.netflix.com/");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (hulu === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/hulu.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "https://www.hulu.com/welcome?orig_referrer=https%3A%2F%2Fwww.google.com%2F");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  // }else if (amazon === 2){
+  //   netImage = $("<img>");
+  //   netImage.addClass("serviceImage");
+  //   netImage.attr("src", "assets/images/Amazon.png");
+  //   imageLink = $("<a>");
+  //   imageLink.attr("href", "https://www.amazon.com/gp/video/offers/ref=dvm_us_dl_sl_go_brw%7Cc_163705074697_m_PfLbcut2-dc_s__?ie=UTF8&gclid=EAIaIQobChMI55DphKey1wIVyIR-Ch2wogqkEAAYASAAEgIyQPD_BwE");
+  //   imageLink.attr("target", "_blank");
+  //   imageLink.append(netImage);
+  //   $("#recommendedServices").append(imageLink);
+  
 }

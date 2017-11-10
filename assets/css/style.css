@@ -101,14 +101,17 @@ a:hover {
 	display: inline;
 }
 
-#list {
-	display: inline-block;
+.listCol {
+    -webkit-column-count: 6;
+    -webkit-column-gap: 10px;
+    -webkit-column-fill: auto;
+    -moz-column-count: 6;
+    -moz-column-gap: 10px;
+    -moz-column-fill: auto;
+    column-count: 6;
+    column-gap: 15px;
+    column-fill: auto;
 }
 
-.pull-left {
-	display: inline-block;
-}
-
-.delete-button {
-	display: inline-block;
-}
+.listRow {
+    display: inline-block;

@@ -310,7 +310,7 @@ var networkCall = function(title){
         }
       }
     }
-    if(response.network.name === "FX") {
+    if(response.network.name === "FX" || response.network.name === "FXX") {
       for (i = 0; i < streamService.length; i ++) {
         if (streamService[i].svc === "fx") {
           streamService[i].count++;

@@ -58,8 +58,9 @@ body {
 }
 
 .show-div {
-	margin-right: 5px;
-	margin-left: 5px;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: 10px;
 	max-height: 350px;
 }
 

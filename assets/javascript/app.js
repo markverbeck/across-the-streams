@@ -204,7 +204,7 @@ $(document).ready(function(){
 
   setTimeout(function() {
     pickStreamer();
-  }, 2500);
+  }, 3000);
 
 });  // end of document.ready!
 

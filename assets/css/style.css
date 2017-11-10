@@ -100,3 +100,7 @@ a:hover {
 #name li {
 	display: inline;
 }
+
+.thumbnail {
+	display: list-item;
+}

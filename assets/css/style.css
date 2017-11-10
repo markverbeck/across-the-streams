@@ -100,3 +100,11 @@ a:hover {
 #name li {
 	display: inline;
 }
+
+#list {
+	display: inline-block;
+	width: 150px;
+	margin-right: 10px;
+	margin-left: 10px;
+	height: 200px;
+}

@@ -383,7 +383,7 @@ var pickStreamer = function(){
     netImage = $("<img>");
     netImage.addClass("serviceImage");
     netImage.attr("src", streamService[i].src);
-    netImage.attr("width", "200");
+    netImage.attr("height", "100");
 
     // href
     imageLink = $("<a>");

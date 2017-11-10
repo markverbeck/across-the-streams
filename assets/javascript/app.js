@@ -19,7 +19,7 @@ var listName;
 var showNames = []; 
 var showCounter = 0;
 var user;
-var uid // = "test-user";
+var uid; // = "test-user";
 
 // image holders and network counter obj
 
@@ -35,6 +35,9 @@ var streamService = [
     { count: '0', svc: 'cbs', src: 'assets/images/cbs.png', href: 'http://www.cbs.com/' },
     { count: '0', svc: 'nbc', src: 'assets/images/nbc.png', href: 'http://www.nbc.com/' },
     { count: '0', svc: 'cw', src: 'assets/images/cw.png', href: 'http://www.cwtv.com/' },
+    { count: '0', svc: 'hbo', src: 'assets/images/hbo.png', href: 'https://www.hbo.com/order' },
+    { count: '0', svc: 'amc', src: 'assets/images/amc.png', href: 'http://www.amc.com/' },
+    { count: '0', svc: 'fx', src: 'assets/images/fx.png', href: 'http://www.fxnetworks.com/' },
 ];
 
 // firebase ref variables
@@ -199,6 +202,7 @@ $(document).ready(function(){
 
   }, 2000); // end timeout
 
+  pickStreamer();
 });  // end of document.ready!
 
 // populate show searched in list ID after search
@@ -278,7 +282,7 @@ var networkCall = function(title){
         }
       }
     }
-    if(response.network.name === "Fox") {
+    if(response.network.name === "FOX") {
       for (i = 0; i < streamService.length; i ++) {
         if (streamService[i].svc === "fox") {
           streamService[i].count++;
@@ -288,6 +292,27 @@ var networkCall = function(title){
     if(response.network.name === "The CW") {
       for (i = 0; i < streamService.length; i ++) {
         if (streamService[i].svc === "cw") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "HBO") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "hbo") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "AMC") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "amc") {
+          streamService[i].count++;
+        }
+      }
+    }
+    if(response.network.name === "FX") {
+      for (i = 0; i < streamService.length; i ++) {
+        if (streamService[i].svc === "fx") {
           streamService[i].count++;
         }
       }

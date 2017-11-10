@@ -366,14 +366,14 @@ var pickStreamer = function(){
 
   //sort the streamServie array
   streamService.sort(function (x, y) {
-    var n = y.count - x.count;
-    if (n != 0) {
-        return n;
-    }
+    return parseFloat(y.count) - parseFloat(x.count);
+    // if (n != 0) {
+    //     return n;
+    // }
 
-    return y.svc - x.svc;
-    return y.src - x.src;
-    return y.href - x.href;
+    // return y.svc - x.svc;
+    // return y.src - x.src;
+    // return y.href - x.href;
   });
 
   console.log(streamService);

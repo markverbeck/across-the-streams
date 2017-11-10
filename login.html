@@ -73,21 +73,32 @@
 			
 			</div>
 		</div> -->
-
-		<!-- actual login from Firebase -->
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4 text-center divBox">
-				<h2 class="logHead">Login</h2>
-				<!-- 'sign-in-with-redirect is needed to make click events in the firebaseui-container work -->
-				<div id="sign-in-with-redirect">
-					<div id="firebaseui-container"></div>
+		<div id="account" class="hidden">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4 text-center divBox">
+					<h2 class="logHead">Account Info</h2>
+					<div id="account-info"></div>
+					<button id="delete-account" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Delete Account</button>
 				</div>
 			</div>
 		</div>
+
+		<!-- actual login from Firebase -->
+		<div id="login-div">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4 text-center divBox">
+					<h2 class="logHead">Login</h2>
+					<!-- 'sign-in-with-redirect is needed to make click events in the firebaseui-container work -->
+					<div id="sign-in-with-redirect">
+						<div id="firebaseui-container"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
-
-
 
 </body>
 </html>

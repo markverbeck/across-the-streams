@@ -19,7 +19,7 @@ var listName;
 var showNames = []; 
 var showCounter = 0;
 var user;
-var uid; // = "test-user";
+var uid;
 
 // image holders and network counter obj
 
@@ -155,24 +155,27 @@ $(document).ready(function(){
       method: "GET"
       }).done(function(response) {
 
+        // outer div for thumbnail
+        var outerDiv = $("<div>");
+        outerDiv.addClass("col-md-2")
+
+        //new div for show
+        var div = $("<div>");
+        div.addClass("thumbnail pull-left show-div");
+        div.attr("value", response.Title);
+
         // add href to poster/title
         var a = $("<a>");
         a.attr("href", "info.html?name="+response.Title);
 
-        //new div for show
-        var div = $("<div>");
-        div.addClass("col-md-2 pull-left show-div");
-        div.attr("value", response.Title);
-
         // poster for the show
         var poster = $("<img>");
         poster.attr("href", "/info.html");
-        poster.addClass("thumbnail");
         poster.attr("src", response.Poster);
         poster.attr("width", "150");
 
         //del button 
-        var deleteButton = $("<button>").addClass("btn-sm btn-danger delete-button");
+        var deleteButton = $("<button>").addClass("close");
         deleteButton.html("X");
         deleteButton.attr("value", response.Title);
 
@@ -183,10 +186,11 @@ $(document).ready(function(){
 
         //append img and delete button to div
         div.append(deleteButton);
-        div.append(a);
         a.append(poster);
         a.append(title);
-        $("#list").append(div);
+        div.append(a);
+        outerDiv.append(div);
+        $("#list").append(outerDiv);
 
         // add shows to array
         showNames[showCounter] = response.Title;

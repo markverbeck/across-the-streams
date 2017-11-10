@@ -102,3 +102,7 @@ a:hover {
 #name li {
 	display: inline;
 }
+
+.serviceImage {
+	margin: 10px;
+}

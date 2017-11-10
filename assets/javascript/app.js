@@ -37,7 +37,7 @@ var imageLink;
 var streamService = [
     { count: '0', svc: 'hulu', src: 'assets/images/hulu.png', href: 'https://www.hulu.com/welcome'},
     { count: '0', svc: 'netflix', src: 'assets/images/netflix.png', href: 'https://www.netflix.com/' },
-    { count: '0', svc: 'amazon', src: 'assets/images/amazon.png', href: 'https://www.amazon.com/Prime-Video/b?node=2676882011' },
+    { count: '0', svc: 'amazon', src: 'assets/images/Amazon.png', href: 'https://www.amazon.com/Prime-Video/b?node=2676882011' },
     { count: '0', svc: 'fox', src: 'assets/images/fox.png', href: 'http://www.fox.com/' },
     { count: '0', svc: 'abc', src: 'assets/images/abc.png', href: 'http://abc.go.com/' },
     { count: '0', svc: 'cbs', src: 'assets/images/cbs.png', href: 'http://www.cbs.com/' },
@@ -198,8 +198,8 @@ $(document).ready(function(){
         showCounter++; 
 
         // call network and web services code
-        networkCall();
-        webChannelCall();
+        networkCall(response.Title);
+        webChannelCall(response.Title);
         pickStreamer();
 
       }); // end ajax
@@ -214,8 +214,8 @@ function populateShows(show) {
   var showURL = "https://www.omdbapi.com/?t=" + show + "&y=&plot=long&apikey=40e9cece";
 
   $.ajax({
-  url: showURL,
-  method: "GET"
+    url: showURL,
+    method: "GET"
   }).done(function(response) {
 
     //should we add to library
@@ -257,8 +257,8 @@ function populateShows(show) {
   });
 }
 
-var networkCall = function(){
-  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+var networkCall = function(title){
+  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + title;
 
   $.ajax({
     url: api,
@@ -315,8 +315,8 @@ var networkCall = function(){
   });
 }
 
-var webChannelCall = function(){
-  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + listName;
+var webChannelCall = function(title){
+  var api = "https://api.tvmaze.com/singlesearch/shows?q=" + title;
   $.ajax({
     url: api,
     method: "GET"
@@ -378,13 +378,14 @@ var pickStreamer = function(){
     netImage = $("<img>");
     netImage.addClass("serviceImage");
     netImage.attr("src", streamService[i].src);
+    netImage.attr("width", "200");
 
     imageLink = $("<a>");
     imageLink.attr("href", streamService[i].href);
     imageLink.attr("target", "_blank");
     imageLink.append(netImage);
-    
-    $("#recommendedServices").append(imageLink);
+
+    $("#recommendedServices").html(imageLink);
   }
 
   // if(fox === 2){

@@ -44,8 +44,6 @@ var streamService = [
 var userRef;
 var showRef;
 
-var houndURL = "https://api.mediahound.com/1.2/security/oauth/authorize?response_type=token&client_id={mhclt_across-the-streams}&client_secret={qZRhyECF7qz72i5veWNqTd68wrbwepwQL71P0bJNgTTfrdaw}&scope=public_profile+user_likes&redirect_uri=http://localhost";
-
 // document ready
 $(document).ready(function(){
 
@@ -163,7 +161,7 @@ $(document).ready(function(){
 
         //new div for show
         var div = $("<div>");
-        div.addClass("pull-left show-div");
+        div.addClass("col-md-2 pull-left show-div");
         div.attr("value", response.Title);
 
         // poster for the show
@@ -226,7 +224,7 @@ function populateShows(show) {
         console.log("movie alread exists in library");
 
         // modal for already in library **FIX-ME - just dims screen
-        // $("#in-lib-modal").modal("show"); 
+        $("#in-lib-modal").modal("show"); 
         
         // when exists already, don't add
         addToLibrary = false;
@@ -379,6 +377,7 @@ var pickStreamer = function(){
   console.log(streamService);
 
   // populate the top 3 streamers in recommendedServices div
+
   setTimeout(function() {
     for (i = 0; i < 3; i++) {
       // image

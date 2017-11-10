@@ -32,6 +32,7 @@ $(document).ready(function(){
 
   // Displays the UI for a signed in user.
   var handleSignedInUser = function(user) {
+    currentUser = user;
     $("#user-signed-in").removeClass();
     $("#user-signed-in").addClass("show");
     $("#user-signed-out").removeClass();
@@ -52,7 +53,6 @@ $(document).ready(function(){
     $("#user-signed-in").addClass("hidden");
     $("#user-signed-out").removeClass();
     $("#user-signed-out").addClass("show");
-    ui.start('#firebaseui-container', getUiConfig());
   };
 
   // Deletes user account. This also should destroy data added by that user in Firebase.
@@ -69,6 +69,7 @@ $(document).ready(function(){
         });
       }
     });
+    currentUser === null;
   };
 
   function showAccountInfo (user) {
@@ -108,8 +109,8 @@ $(document).ready(function(){
     document.getElementById('delete-account').addEventListener('click', function() {
         deleteAccount();
     });
-    if (currentUser != null) {
-      handleSignedInUser(currentUser);
+    if (currentUser === null) {
+      handleSignedOutUser();
     }
   };
 

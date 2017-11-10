@@ -101,6 +101,10 @@ a:hover {
 	display: inline;
 }
 
+.pull-left {
+	display: list-item;
+}
+
 .thumbnail {
 	display: list-item;
 }

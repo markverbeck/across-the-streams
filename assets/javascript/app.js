@@ -364,7 +364,7 @@ function populateShows(show) {
         console.log("movie alread exists in library");
 
         // modal for already in library **FIX-ME - just dims screen
-        $("#myModal").modal("show"); 
+        $("#in-lib-modal").modal("show"); 
         
         // when exists already, don't add
         addToLibrary = false;

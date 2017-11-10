@@ -202,7 +202,6 @@ $(document).ready(function(){
 
   }, 2000); // end timeout
 
-  pickStreamer();
 });  // end of document.ready!
 
 // populate show searched in list ID after search
@@ -378,20 +377,23 @@ var pickStreamer = function(){
   console.log(streamService);
 
   // populate the top 3 streamers in recommendedServices div
-  for (i = 0; i < 3; i++) {
-    // image
-    netImage = $("<img>");
-    netImage.addClass("serviceImage");
-    netImage.attr("src", streamService[i].src);
-    netImage.attr("height", "100");
 
-    // href
-    imageLink = $("<a>");
-    imageLink.attr("href", streamService[i].href);
-    imageLink.attr("target", "_blank");
-    imageLink.append(netImage);
+  setTimeout(function() {
+    for (i = 0; i < 3; i++) {
+      // image
+      netImage = $("<img>");
+      netImage.addClass("serviceImage");
+      netImage.attr("src", streamService[i].src);
+      netImage.attr("width", "200");
 
-    // append it to recommendedServices
-    $("#recommendedServices").append(imageLink);
-  }
+      // href
+      imageLink = $("<a>");
+      imageLink.attr("href", streamService[i].href);
+      imageLink.attr("target", "_blank");
+      imageLink.append(netImage);
+
+      // append it to recommendedServices
+      $("#recommendedServices").append(imageLink);
+    }
+  }, 200);
 } // end of pickStreamer

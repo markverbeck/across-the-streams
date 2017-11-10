@@ -100,3 +100,15 @@ a:hover {
 #name li {
 	display: inline;
 }
+
+#list {
+	display: inline-block;
+}
+
+.pull-left {
+	display: inline-block;
+}
+
+.delete-button {
+	display: inline-block;
+}

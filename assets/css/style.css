@@ -100,11 +100,3 @@ a:hover {
 #name li {
 	display: inline;
 }
-
-.pull-left {
-	display: list-item;
-}
-
-.thumbnail {
-	display: list-item;
-}

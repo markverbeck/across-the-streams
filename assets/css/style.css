@@ -60,6 +60,7 @@ body {
 .show-div {
 	margin-right: 10px;
 	margin-left: 10px;
+	max-height: 250px;
 }
 
 #show-info, #show-plot, #show-times {

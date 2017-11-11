@@ -176,7 +176,7 @@ $(document).ready(function(){
 
         //del button 
         var deleteButton = $("<button>").addClass("close");
-        deleteButton.html("X");
+        deleteButton.addClass("delete-button");
         deleteButton.attr("value", response.Title);
 
         //title 

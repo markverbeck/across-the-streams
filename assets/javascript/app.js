@@ -368,7 +368,7 @@ var webChannelCall = function(title){
 
 var pickStreamer = function(){
   //empty the div
-  $("#recommendedServices").html("");
+  $("#recommendedStreamingService").html("");
 
   //sort the streamServie array
   streamService.sort(function (x, y) {
@@ -392,6 +392,6 @@ var pickStreamer = function(){
     imageLink.append(netImage);
 
     // append it to recommendedServices
-    $("#recommendedServices").append(imageLink);
+    $("#recommendedStreamingService").append(imageLink);
   }
 } // end of pickStreamer

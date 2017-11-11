@@ -9,7 +9,6 @@ function getParameterByName(name, url) {
 };
 
 var name = getParameterByName("name");
-console.log(name);
 
 // display poster on info page
 function displayShowPoster() {
@@ -46,7 +45,6 @@ function displayShowInfo() {
     // Creates a div to hold the show
     $("#show-info").empty();
     // Retrieves the title, year, genre, and number of seasons Data
-    console.log(response);
     $("#show-info").html("<p>Title: " + response.Title + "</p>");
     $("#show-info").append("<p>Year: " + response.Year + "</p>");
     $("#show-info").append("<p>Actors: " + response.Actors + "</p>");
@@ -68,7 +66,6 @@ function displayShowPlot() {
     // Creates a div to hold the Show
     $("#show-plot").empty();
     // Retrieves the Plot Data
-    console.log(response);
     $("#show-plot").html("<p>Plot: " + response.Plot + "</p>");
   });
 };
@@ -82,7 +79,6 @@ var displayShowTimes = function(){
     }).done(function(response){
 
       $("show-times").empty();
-      console.log(response);
       
       var time;
       if(response.schedule.time === "") {

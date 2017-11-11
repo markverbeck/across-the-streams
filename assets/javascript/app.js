@@ -230,9 +230,8 @@ function populateShows(show) {
       // check for title in showNames array
       if (showNames[i] === response.Title) {
         
-        console.log("movie alread exists in library");
 
-        // modal for already in library **FIX-ME - just dims screen
+        // modal for already in library
         $("#myModal").modal("show"); 
         
         // when exists already, don't add

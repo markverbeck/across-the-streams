@@ -324,10 +324,6 @@ var networkCall = function(title){
         }
       }
     }
-    
-    console.log(response.network.name);
-    console.log(streamService);
-  
   });
 } // end of networkCall
 
@@ -359,10 +355,6 @@ var webChannelCall = function(title){
         }
       }
     }
-
-    console.log(response.webChannel.name);
-    console.log(streamService);
-
   });
 }  // end of webChannel
 
@@ -374,8 +366,6 @@ var pickStreamer = function(){
   streamService.sort(function (x, y) {
     return parseFloat(y.count) - parseFloat(x.count);
   });
-
-  console.log(streamService);
 
   // populate the top 3 streamers in recommendedServices div
   for (i = 0; i < 3; i++) {

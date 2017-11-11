@@ -112,3 +112,8 @@ a:hover {
 	margin: 10px;
 	margin-top: 5px;
 }
+
+.modal-title, .modal-body {
+	color: black;
+	font-family: 'Martel Sans', sans-serif;
+}

@@ -66,6 +66,7 @@ body {
 .thumbnail {
 	background: none;
 	height: 350px;
+	border: 0px;
 }
 
 #show-info, #show-plot, #show-times {
